@@ -3,6 +3,7 @@ import "./DashboardNavbar.css";
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
 import { ROLE_LABEL } from "../../utils/dashboardConfig";
 import { getInitials } from "../../utils/helpers";
+import { getAvatarById } from "../../utils/avatarConfig";
 
 const DashboardNavbar = ({
   user,
@@ -10,6 +11,7 @@ const DashboardNavbar = ({
   onRoleSwitch,
   onLogout,
   onMenuToggle,
+  onOpenModal,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const profileRef = useRef(null);
@@ -70,6 +72,7 @@ const DashboardNavbar = ({
           className="dash-avatar-btn"
           onClick={() => setIsDropdownOpen((prev) => !prev)}
           aria-label="Profile menu"
+          style={{ background: getAvatarById(user?.avatar).bg }}
         >
           {getInitials(user?.fullName)}
         </button>
@@ -83,6 +86,7 @@ const DashboardNavbar = ({
             }}
             onLogout={onLogout}
             onClose={() => setIsDropdownOpen(false)}
+            onOpenModal={onOpenModal}
           />
         )}
       </div>

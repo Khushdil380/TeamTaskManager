@@ -1,0 +1,183 @@
+/* PROFILE MODALS - Shared styles for avatar, name, and password modals */
+
+.profile-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Hint text */
+.profile-modal-hint {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Avatar grid: 5 columns, 2 rows = 10 options */
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.75rem;
+}
+
+.avatar-option {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease,
+    box-shadow 0.15s ease;
+  font-family: inherit;
+}
+
+.avatar-option:hover {
+  transform: scale(1.08);
+}
+
+.avatar-option.selected {
+  border-color: var(--color-text-primary);
+  transform: scale(1.08);
+  box-shadow: 0 0 0 2px var(--color-bg-card),
+    0 0 0 5px var(--color-text-primary);
+}
+
+/* Form fields */
+.profile-modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile-modal-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.profile-modal-input {
+  padding: 0.75rem 1rem;
+  background: rgba(var(--color-white-rgb), 0.05);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.2);
+  border-radius: 6px;
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.profile-modal-input:focus {
+  outline: none;
+  background: rgba(var(--color-white-rgb), 0.08);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+}
+
+.profile-modal-otp-input {
+  text-align: center;
+  letter-spacing: 0.4em;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* Error message */
+.profile-modal-error {
+  padding: 0.65rem 1rem;
+  background: rgba(var(--color-danger-rgb), 0.1);
+  border: 1px solid rgba(var(--color-danger-rgb), 0.3);
+  border-radius: 6px;
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* Save button */
+.profile-modal-save-btn {
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-accent)
+  );
+  color: var(--color-text-primary);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.profile-modal-save-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(var(--color-primary-rgb), 0.3);
+}
+
+.profile-modal-save-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Resend OTP link button */
+.profile-modal-resend-btn {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 0.875rem;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  text-align: center;
+  transition: color 0.2s ease;
+  align-self: center;
+}
+
+.profile-modal-resend-btn:hover:not(:disabled) {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.profile-modal-resend-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Done (success) state */
+.profile-modal-done {
+  align-items: center;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.profile-modal-done-icon {
+  font-size: 2.5rem;
+}
+
+.profile-modal-done-msg {
+  color: var(--color-success);
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .avatar-grid {
+    gap: 0.5rem;
+  }
+
+  .profile-modal-input {
+    font-size: 16px;
+  }
+}

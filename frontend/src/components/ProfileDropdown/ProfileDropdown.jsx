@@ -1,15 +1,20 @@
 import "./ProfileDropdown.css";
 import { ROLES, ROLE_LABEL } from "../../utils/dashboardConfig";
 import { getInitials } from "../../utils/helpers";
+import { getAvatarById } from "../../utils/avatarConfig";
 
-const ProfileDropdown = ({ user, role, onRoleSwitch, onLogout, onClose }) => {
+const ProfileDropdown = ({ user, role, onRoleSwitch, onLogout, onClose, onOpenModal }) => {
   const targetRole = role === ROLES.ADMIN ? ROLES.MEMBER : ROLES.ADMIN;
+  const avatarBg = getAvatarById(user?.avatar).bg;
 
   return (
     <div className="profile-dropdown">
       {/* User info header */}
       <div className="profile-dropdown-header">
-        <div className="profile-dropdown-avatar">
+        <div
+          className="profile-dropdown-avatar"
+          style={{ background: avatarBg }}
+        >
           {getInitials(user?.fullName)}
         </div>
         <div className="profile-dropdown-info">
@@ -21,20 +26,26 @@ const ProfileDropdown = ({ user, role, onRoleSwitch, onLogout, onClose }) => {
       <div className="profile-dropdown-divider" />
 
       {/* Account actions */}
-      <button className="profile-dropdown-item" onClick={onClose}>
+      <button
+        className="profile-dropdown-item"
+        onClick={() => { onOpenModal("avatar"); onClose(); }}
+      >
         <span className="profile-dropdown-item-icon">🖼️</span>
         Update Avatar
-        <span className="profile-dropdown-badge">Soon</span>
       </button>
-      <button className="profile-dropdown-item" onClick={onClose}>
+      <button
+        className="profile-dropdown-item"
+        onClick={() => { onOpenModal("edit-name"); onClose(); }}
+      >
         <span className="profile-dropdown-item-icon">✏️</span>
         Edit Name
-        <span className="profile-dropdown-badge">Soon</span>
       </button>
-      <button className="profile-dropdown-item" onClick={onClose}>
+      <button
+        className="profile-dropdown-item"
+        onClick={() => { onOpenModal("update-password"); onClose(); }}
+      >
         <span className="profile-dropdown-item-icon">🔒</span>
         Update Password
-        <span className="profile-dropdown-badge">Soon</span>
       </button>
 
       <div className="profile-dropdown-divider" />

@@ -6,6 +6,10 @@ import { getUserRole, setUserRole, ROLES } from "../../utils/dashboardConfig";
 import DashboardNavbar from "../../components/DashboardNavbar/DashboardNavbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import DashboardContent from "../../components/DashboardContent/DashboardContent";
+import Modal from "../../components/Modal/Modal";
+import AvatarModal from "../../components/ProfileModals/AvatarModal";
+import EditNameModal from "../../components/ProfileModals/EditNameModal";
+import UpdatePasswordModal from "../../components/ProfileModals/UpdatePasswordModal";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -13,6 +17,7 @@ const Dashboard = () => {
   const [role, setRole] = useState(ROLES.MEMBER);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [activeModal, setActiveModal] = useState(null);
 
   useEffect(() => {
     const token = getAuthToken();
@@ -41,6 +46,12 @@ const Dashboard = () => {
     setIsSidebarOpen(false);
   };
 
+  const handleUserUpdate = (updates) => {
+    setUser((prev) => ({ ...prev, ...updates }));
+  };
+
+  const closeModal = () => setActiveModal(null);
+
   if (!user) return null;
 
   return (
@@ -51,6 +62,7 @@ const Dashboard = () => {
         onRoleSwitch={handleRoleSwitch}
         onLogout={handleLogout}
         onMenuToggle={() => setIsSidebarOpen((prev) => !prev)}
+        onOpenModal={setActiveModal}
       />
       <div className="dashboard-body">
         <Sidebar
@@ -62,6 +74,33 @@ const Dashboard = () => {
         />
         <DashboardContent activeTab={activeTab} user={user} role={role} />
       </div>
+
+      <Modal
+        isOpen={activeModal === "avatar"}
+        onClose={closeModal}
+        title="Update Avatar"
+        size="medium"
+      >
+        <AvatarModal user={user} onClose={closeModal} onUpdate={handleUserUpdate} />
+      </Modal>
+
+      <Modal
+        isOpen={activeModal === "edit-name"}
+        onClose={closeModal}
+        title="Edit Name"
+        size="medium"
+      >
+        <EditNameModal user={user} onClose={closeModal} onUpdate={handleUserUpdate} />
+      </Modal>
+
+      <Modal
+        isOpen={activeModal === "update-password"}
+        onClose={closeModal}
+        title="Update Password"
+        size="medium"
+      >
+        <UpdatePasswordModal user={user} onClose={closeModal} />
+      </Modal>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import ComingSoon from "./ComingSoon";
 const DashboardContent = ({ activeTab, user, role }) => (
   <main className="dash-content">
     {activeTab === "dashboard" ? (
-      <DashboardHome user={user} role={role} />
+      <DashboardHome user={user} />
     ) : (
       <ComingSoon tabId={activeTab} />
     )}

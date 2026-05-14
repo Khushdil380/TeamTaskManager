@@ -83,16 +83,34 @@ const Preloader = () => {
           </g>
           <g className="pencil__eraser" transform="rotate(-90) translate(49,0)">
             <g className="pencil__eraser-skew">
-              <rect style={{ fill: "var(--preloader-secondary)" }} rx="5" ry="5" width="30" height="30" />
+              <rect
+                style={{ fill: "var(--preloader-secondary)" }}
+                rx="5"
+                ry="5"
+                width="30"
+                height="30"
+              />
               <rect
                 style={{ fill: "var(--preloader-dark)" }}
                 width="5"
                 height="30"
                 clipPath="url(#pencil-eraser)"
               />
-              <rect style={{ fill: "var(--preloader-paper-base)" }} width="30" height="20" />
-              <rect style={{ fill: "var(--preloader-paper-gray)" }} width="15" height="20" />
-              <rect style={{ fill: "var(--preloader-paper-light)" }} width="5" height="20" />
+              <rect
+                style={{ fill: "var(--preloader-paper-base)" }}
+                width="30"
+                height="20"
+              />
+              <rect
+                style={{ fill: "var(--preloader-paper-gray)" }}
+                width="15"
+                height="20"
+              />
+              <rect
+                style={{ fill: "var(--preloader-paper-light)" }}
+                width="5"
+                height="20"
+              />
               <rect
                 style={{ fill: "rgba(var(--color-primary-rgb), 0.2)" }}
                 y="6"
@@ -111,9 +129,18 @@ const Preloader = () => {
             className="pencil__point"
             transform="rotate(-90) translate(49,-30)"
           >
-            <polygon style={{ fill: "var(--preloader-point-gold)" }} points="15 0,30 30,0 30" />
-            <polygon style={{ fill: "var(--preloader-point-amber)" }} points="15 0,6 30,0 30" />
-            <polygon style={{ fill: "var(--preloader-point-tip)" }} points="15 0,20 10,10 10" />
+            <polygon
+              style={{ fill: "var(--preloader-point-gold)" }}
+              points="15 0,30 30,0 30"
+            />
+            <polygon
+              style={{ fill: "var(--preloader-point-amber)" }}
+              points="15 0,6 30,0 30"
+            />
+            <polygon
+              style={{ fill: "var(--preloader-point-tip)" }}
+              points="15 0,20 10,10 10"
+            />
           </g>
         </g>
       </svg>

@@ -7,6 +7,9 @@ import {
   forgotPassword,
   resetPassword,
   verifyToken,
+  updateProfile,
+  requestPasswordUpdateOtp,
+  updatePassword,
 } from "../controllers/authController.js";
 
 const router = express.Router();
@@ -21,5 +24,10 @@ router.post("/reset-password", resetPassword);
 
 // Protected route
 router.get("/verify-token", verifyToken);
+
+// Authenticated profile routes
+router.put("/update-profile", updateProfile);
+router.post("/request-password-update-otp", requestPasswordUpdateOtp);
+router.put("/update-password", updatePassword);
 
 export default router;

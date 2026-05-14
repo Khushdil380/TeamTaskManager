@@ -113,6 +113,7 @@ export const verifyOtp = async (req, res) => {
         fullName: user.fullName,
         email: user.email,
         isVerified: user.isVerified,
+        avatar: user.avatar,
       },
     });
   } catch (error) {
@@ -175,6 +176,7 @@ export const login = async (req, res) => {
         fullName: user.fullName,
         email: user.email,
         isVerified: user.isVerified,
+        avatar: user.avatar,
       },
     });
   } catch (error) {
@@ -339,11 +341,149 @@ export const verifyToken = async (req, res) => {
         fullName: user.fullName,
         email: user.email,
         isVerified: user.isVerified,
+        avatar: user.avatar,
       },
     });
   } catch (error) {
     return res.status(401).json({
       message: "Invalid or expired token",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
+    });
+  }
+};
+
+// Update profile (fullName and/or avatar)
+export const updateProfile = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).json({ message: "No token provided" });
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const { fullName, avatar } = req.body;
+
+    const updateData = {};
+    if (fullName && fullName.trim()) updateData.fullName = fullName.trim();
+    if (avatar && Number.isInteger(avatar) && avatar >= 1 && avatar <= 10) {
+      updateData.avatar = avatar;
+    }
+
+    if (Object.keys(updateData).length === 0) {
+      return res.status(400).json({ message: "No valid fields to update" });
+    }
+
+    const user = await User.findByIdAndUpdate(decoded.userId, updateData, {
+      new: true,
+    });
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    return res.status(200).json({
+      message: "Profile updated successfully",
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        isVerified: user.isVerified,
+        avatar: user.avatar,
+      },
+    });
+  } catch (error) {
+    console.error("Update profile error:", error);
+    return res.status(500).json({
+      message: "Failed to update profile",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
+    });
+  }
+};
+
+// Request OTP for password update (authenticated)
+export const requestPasswordUpdateOtp = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).json({ message: "No token provided" });
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.userId);
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const otp = generateOtp();
+    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+    user.resetPasswordOtp = otp;
+    user.resetPasswordOtpExpiry = otpExpiry;
+    await user.save();
+
+    await sendOtpEmail(user.email, otp);
+
+    return res.status(200).json({
+      message: `OTP sent to ${user.email}`,
+      email: user.email,
+    });
+  } catch (error) {
+    console.error("Request password update OTP error:", error);
+    return res.status(500).json({
+      message: "Failed to send OTP",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
+    });
+  }
+};
+
+// Update password with OTP verification (authenticated)
+export const updatePassword = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).json({ message: "No token provided" });
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const { otp, newPassword, confirmPassword } = req.body;
+
+    if (!otp || !newPassword || !confirmPassword) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({ message: "Passwords do not match" });
+    }
+
+    if (newPassword.length < 6) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters" });
+    }
+
+    const user = await User.findById(decoded.userId).select(
+      "+resetPasswordOtp +resetPasswordOtpExpiry",
+    );
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (!user.resetPasswordOtp || !user.resetPasswordOtpExpiry) {
+      return res
+        .status(400)
+        .json({ message: "No OTP requested. Please request OTP first." });
+    }
+
+    if (new Date() > user.resetPasswordOtpExpiry) {
+      return res
+        .status(400)
+        .json({ message: "OTP has expired. Please request a new one." });
+    }
+
+    if (user.resetPasswordOtp !== otp) {
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
+
+    user.password = newPassword;
+    user.resetPasswordOtp = null;
+    user.resetPasswordOtpExpiry = null;
+    await user.save();
+
+    return res.status(200).json({ message: "Password updated successfully!" });
+  } catch (error) {
+    console.error("Update password error:", error);
+    return res.status(500).json({
+      message: "Failed to update password",
       error: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }

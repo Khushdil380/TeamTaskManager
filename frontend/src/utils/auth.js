@@ -20,4 +20,12 @@ export const clearAuthData = () => {
   localStorage.removeItem(AUTH_USER_KEY);
 };
 
+export const updateAuthUser = (updates) => {
+  const user = getAuthUser();
+  if (user) {
+    localStorage.setItem(AUTH_USER_KEY, JSON.stringify({ ...user, ...updates }));
+  }
+};
+};
+
 export const isAuthenticated = () => !!getAuthToken();
