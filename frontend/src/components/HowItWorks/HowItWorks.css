@@ -2,7 +2,7 @@
 
 .how-it-works {
   padding: 60px 2rem;
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent)) !important;
 }
 
 .how-container {
@@ -50,7 +50,7 @@
 .step-number {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--primary-color);
+  color: var(--color-primary);
   background: white;
   border: 1px solid rgba(255, 255, 255, 0.3);
   width: 48px;

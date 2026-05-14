@@ -2,7 +2,7 @@
 
 .cta-section {
   padding: 60px 2rem;
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent)) !important;
 }
 
 .cta-container {
@@ -31,7 +31,7 @@
   align-self: center;
   padding: 0.75rem 1.5rem;
   background: white;
-  color: var(--primary-color);
+  color: var(--color-primary);
   border: none;
   border-radius: 6px;
   font-size: 0.95rem;

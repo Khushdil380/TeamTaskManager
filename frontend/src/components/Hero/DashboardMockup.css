@@ -149,11 +149,11 @@
 }
 
 .avatar-1 {
-  background: var(--primary-color);
+  background: var(--color-primary);
 }
 
 .avatar-2 {
-  background: var(--accent-color);
+  background: var(--color-accent);
 }
 
 .avatar-3 {
