@@ -5,7 +5,8 @@ const HowItWorks = () => {
     {
       number: "01",
       title: "Create Projects",
-      description: "Set up your projects and define team members with specific roles.",
+      description:
+        "Set up your projects and define team members with specific roles.",
     },
     {
       number: "02",

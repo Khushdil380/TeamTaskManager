@@ -1,8 +1,8 @@
-/* TASK CARD STYLES - Minimal */
+/* TASK CARD STYLES - Minimal with orange background */
 
 .task-card {
-  background: rgba(255, 106, 51, 0.05);
-  border: 1px solid rgba(255, 106, 51, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 6px;
   padding: 0.6rem;
   display: flex;
@@ -12,7 +12,7 @@
 }
 
 .task-card:hover {
-  background: rgba(255, 106, 51, 0.1);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .task-header {
@@ -24,7 +24,7 @@
 .task-checkbox {
   width: 14px;
   height: 14px;
-  border: 1px solid var(--primary-color);
+  border: 1px solid white;
   border-radius: 3px;
   flex-shrink: 0;
   margin-top: 1px;
@@ -33,7 +33,7 @@
 .task-title {
   font-size: 0.75rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: white;
 }
 
 .task-footer {
@@ -52,15 +52,15 @@
 }
 
 .priority-high {
-  background: rgba(255, 106, 51, 0.2);
-  color: var(--primary-color);
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
 }
 
 .priority-medium {
-  background: rgba(255, 152, 0, 0.2);
-  color: #ff9800;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
 }
 
 .task-due-date {
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.8);
 }

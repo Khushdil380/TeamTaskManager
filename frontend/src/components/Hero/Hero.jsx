@@ -13,7 +13,7 @@ const Hero = () => {
           entry.target.classList.add("visible");
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (heroRef.current) {

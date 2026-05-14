@@ -5,27 +5,32 @@ const Features = () => {
     {
       icon: "📋",
       title: "Smart Task Management",
-      description: "Organize, prioritize, and track tasks with intelligent categorization.",
+      description:
+        "Organize, prioritize, and track tasks with intelligent categorization.",
     },
     {
       icon: "🤝",
       title: "Real-Time Collaboration",
-      description: "Work together seamlessly with instant updates and live notifications.",
+      description:
+        "Work together seamlessly with instant updates and live notifications.",
     },
     {
       icon: "📊",
       title: "Analytics & Insights",
-      description: "Track productivity with detailed analytics and performance metrics.",
+      description:
+        "Track productivity with detailed analytics and performance metrics.",
     },
     {
       icon: "🔔",
       title: "Smart Notifications",
-      description: "Get notified instantly about important updates and deadlines.",
+      description:
+        "Get notified instantly about important updates and deadlines.",
     },
     {
       icon: "⚡",
       title: "Lightning Fast",
-      description: "Experience blazing-fast performance with optimized workflows.",
+      description:
+        "Experience blazing-fast performance with optimized workflows.",
     },
     {
       icon: "🔒",

@@ -70,7 +70,11 @@ const DashboardMockup = () => {
               priority="Medium"
               dueDate="Tomorrow"
             />
-            <TaskCard title="Database Setup" priority="High" dueDate="In 2 days" />
+            <TaskCard
+              title="Database Setup"
+              priority="High"
+              dueDate="In 2 days"
+            />
           </div>
         </div>
 

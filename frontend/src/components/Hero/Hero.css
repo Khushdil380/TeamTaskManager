@@ -1,20 +1,22 @@
-/* HERO SECTION STYLES - Minimal vertical layout */
+/* HERO SECTION STYLES - Minimal vertical layout with orange accents */
 
 .hero {
   min-height: auto;
-  padding: 100px 2rem 60px;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  gap: 0;
+  max-width: 100%;
+  margin: 0;
   position: relative;
 }
 
 .hero-content-wrapper {
   display: flex;
   align-items: center;
-  min-height: auto;
+  padding: 100px 2rem 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .hero-mockup-wrapper {
@@ -22,13 +24,19 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  padding: 60px 2rem;
+  position: relative;
 }
 
 /* RESPONSIVE */
 
 @media (max-width: 768px) {
-  .hero {
+  .hero-content-wrapper {
     padding: 80px 1.5rem 40px;
-    gap: 2rem;
+  }
+
+  .hero-mockup-wrapper {
+    padding: 40px 1.5rem;
   }
 }

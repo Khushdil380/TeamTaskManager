@@ -12,8 +12,8 @@ const Footer = () => {
             everywhere.
           </p>
           <p className="footer-credit">
-            Created by{" "}
-            <span className="credit-highlight">Khushdil Ansari</span> for{" "}
+            Created by <span className="credit-highlight">Khushdil Ansari</span>{" "}
+            for{" "}
             <span className="credit-highlight">
               Software Engineer Recruitment Process
             </span>
