@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./ProfileModals.css";
 import { AVATAR_OPTIONS, getAvatarById } from "../../utils/avatarConfig";
-import { getInitials } from "../../utils/helpers";
 import { getAuthToken, updateAuthUser } from "../../utils/auth";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -56,7 +55,7 @@ const AvatarModal = ({ user, onClose, onUpdate }) => {
             aria-label={`Avatar option ${av.id}`}
             type="button"
           >
-            {getInitials(user?.fullName)}
+            {av.icon}
           </button>
         ))}
       </div>

@@ -1,6 +1,5 @@
 import "./ProfileDropdown.css";
 import { ROLES, ROLE_LABEL } from "../../utils/dashboardConfig";
-import { getInitials } from "../../utils/helpers";
 import { getAvatarById } from "../../utils/avatarConfig";
 
 const ProfileDropdown = ({ user, role, onRoleSwitch, onLogout, onClose, onOpenModal }) => {
@@ -15,7 +14,7 @@ const ProfileDropdown = ({ user, role, onRoleSwitch, onLogout, onClose, onOpenMo
           className="profile-dropdown-avatar"
           style={{ background: avatarBg }}
         >
-          {getInitials(user?.fullName)}
+          {getAvatarById(user?.avatar).icon}
         </div>
         <div className="profile-dropdown-info">
           <span className="profile-dropdown-name">{user?.fullName}</span>

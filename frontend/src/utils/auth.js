@@ -26,6 +26,5 @@ export const updateAuthUser = (updates) => {
     localStorage.setItem(AUTH_USER_KEY, JSON.stringify({ ...user, ...updates }));
   }
 };
-};
 
 export const isAuthenticated = () => !!getAuthToken();

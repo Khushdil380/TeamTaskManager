@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import "./DashboardNavbar.css";
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
 import { ROLE_LABEL } from "../../utils/dashboardConfig";
-import { getInitials } from "../../utils/helpers";
 import { getAvatarById } from "../../utils/avatarConfig";
 
 const DashboardNavbar = ({
@@ -74,7 +73,7 @@ const DashboardNavbar = ({
           aria-label="Profile menu"
           style={{ background: getAvatarById(user?.avatar).bg }}
         >
-          {getInitials(user?.fullName)}
+          {getAvatarById(user?.avatar).icon}
         </button>
         {isDropdownOpen && (
           <ProfileDropdown
