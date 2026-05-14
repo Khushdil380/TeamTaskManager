@@ -1,12 +1,12 @@
-import Navbar from "../Navbar/Navbar";
-import BackgroundAnimation from "../BackgroundAnimation/BackgroundAnimation";
-import Hero from "../Hero/Hero";
-import AboutSection from "../AboutSection/AboutSection";
-import Features from "../Features/Features";
-import HowItWorks from "../HowItWorks/HowItWorks";
-import Testimonials from "../Testimonials/Testimonials";
-import CTASection from "../CTASection/CTASection";
-import Footer from "../Footer/Footer";
+import Navbar from "../../components/Navbar/Navbar";
+import BackgroundAnimation from "../../components/BackgroundAnimation/BackgroundAnimation";
+import Hero from "../../components/Hero/Hero";
+import AboutSection from "../../components/AboutSection/AboutSection";
+import Features from "../../components/Features/Features";
+import HowItWorks from "../../components/HowItWorks/HowItWorks";
+import Testimonials from "../../components/Testimonials/Testimonials";
+import CTASection from "../../components/CTASection/CTASection";
+import Footer from "../../components/Footer/Footer";
 
 const Home = () => {
   return (
