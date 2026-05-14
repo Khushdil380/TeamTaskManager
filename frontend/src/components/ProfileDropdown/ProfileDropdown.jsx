@@ -2,7 +2,14 @@ import "./ProfileDropdown.css";
 import { ROLES, ROLE_LABEL } from "../../utils/dashboardConfig";
 import { getAvatarById } from "../../utils/avatarConfig";
 
-const ProfileDropdown = ({ user, role, onRoleSwitch, onLogout, onClose, onOpenModal }) => {
+const ProfileDropdown = ({
+  user,
+  role,
+  onRoleSwitch,
+  onLogout,
+  onClose,
+  onOpenModal,
+}) => {
   const targetRole = role === ROLES.ADMIN ? ROLES.MEMBER : ROLES.ADMIN;
   const avatarBg = getAvatarById(user?.avatar).bg;
 
@@ -27,21 +34,30 @@ const ProfileDropdown = ({ user, role, onRoleSwitch, onLogout, onClose, onOpenMo
       {/* Account actions */}
       <button
         className="profile-dropdown-item"
-        onClick={() => { onOpenModal("avatar"); onClose(); }}
+        onClick={() => {
+          onOpenModal("avatar");
+          onClose();
+        }}
       >
         <span className="profile-dropdown-item-icon">🖼️</span>
         Update Avatar
       </button>
       <button
         className="profile-dropdown-item"
-        onClick={() => { onOpenModal("edit-name"); onClose(); }}
+        onClick={() => {
+          onOpenModal("edit-name");
+          onClose();
+        }}
       >
         <span className="profile-dropdown-item-icon">✏️</span>
         Edit Name
       </button>
       <button
         className="profile-dropdown-item"
-        onClick={() => { onOpenModal("update-password"); onClose(); }}
+        onClick={() => {
+          onOpenModal("update-password");
+          onClose();
+        }}
       >
         <span className="profile-dropdown-item-icon">🔒</span>
         Update Password

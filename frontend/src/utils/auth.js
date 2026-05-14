@@ -23,7 +23,10 @@ export const clearAuthData = () => {
 export const updateAuthUser = (updates) => {
   const user = getAuthUser();
   if (user) {
-    localStorage.setItem(AUTH_USER_KEY, JSON.stringify({ ...user, ...updates }));
+    localStorage.setItem(
+      AUTH_USER_KEY,
+      JSON.stringify({ ...user, ...updates }),
+    );
   }
 };
 

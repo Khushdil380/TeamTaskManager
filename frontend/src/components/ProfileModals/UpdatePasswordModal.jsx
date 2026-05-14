@@ -80,8 +80,7 @@ const UpdatePasswordModal = ({ user, onClose }) => {
       });
 
       const data = await res.json();
-      if (!res.ok)
-        throw new Error(data.message || "Failed to update password");
+      if (!res.ok) throw new Error(data.message || "Failed to update password");
 
       setStep(STEPS.DONE);
     } catch (err) {

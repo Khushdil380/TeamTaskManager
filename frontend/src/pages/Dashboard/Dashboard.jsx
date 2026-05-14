@@ -81,7 +81,11 @@ const Dashboard = () => {
         title="Update Avatar"
         size="medium"
       >
-        <AvatarModal user={user} onClose={closeModal} onUpdate={handleUserUpdate} />
+        <AvatarModal
+          user={user}
+          onClose={closeModal}
+          onUpdate={handleUserUpdate}
+        />
       </Modal>
 
       <Modal
@@ -90,7 +94,11 @@ const Dashboard = () => {
         title="Edit Name"
         size="medium"
       >
-        <EditNameModal user={user} onClose={closeModal} onUpdate={handleUserUpdate} />
+        <EditNameModal
+          user={user}
+          onClose={closeModal}
+          onUpdate={handleUserUpdate}
+        />
       </Modal>
 
       <Modal

@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { connectDB } from "./config/database.js";
 import authRoutes from "./routes/authRoutes.js";
+import teamRoutes from "./routes/teamRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,6 +30,7 @@ connectDB();
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/team", teamRoutes);
 
 // Basic Routes
 app.get("/api/health", (req, res) => {

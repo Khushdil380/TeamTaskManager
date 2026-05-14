@@ -7,6 +7,14 @@
   padding: 2rem;
 }
 
+/* Full-height mode — used by pages that manage their own scroll */
+.dash-content--full {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Scrollbar */
 .dash-content::-webkit-scrollbar {
   width: 6px;
