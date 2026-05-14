@@ -1,0 +1,139 @@
+/* FEATURES SECTION STYLES */
+
+.features {
+  padding: 80px 2rem;
+  background: rgba(255, 106, 51, 0.03);
+  border-top: 1px solid rgba(255, 106, 51, 0.1);
+  border-bottom: 1px solid rgba(255, 106, 51, 0.1);
+}
+
+.features-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* SECTION HEADER */
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* FEATURES GRID */
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+/* FEATURE CARD */
+
+.feature-card {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 106, 51, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.feature-card:nth-child(1) {
+  animation-delay: 0s;
+}
+.feature-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.feature-card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.feature-card:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.feature-card:nth-child(5) {
+  animation-delay: 0.4s;
+}
+.feature-card:nth-child(6) {
+  animation-delay: 0.5s;
+}
+
+.feature-card:hover {
+  background: rgba(255, 106, 51, 0.08);
+  border-color: rgba(255, 106, 51, 0.3);
+  transform: translateY(-4px);
+}
+
+/* FEATURE ICON */
+
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+/* FEATURE TITLE */
+
+.feature-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+/* FEATURE DESCRIPTION */
+
+.feature-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ANIMATIONS */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .features {
+    padding: 60px 1.5rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-card {
+    padding: 1.5rem;
+  }
+}

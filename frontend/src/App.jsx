@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Preloader from "./components/Preloader/Preloader";
+import Home from "./pages/Home/Home";
 import "./styles/index.css";
 import "./App.css";
 
@@ -9,7 +10,7 @@ function App() {
       <Preloader />
       <Router>
         <Routes>
-          <Route path="/" element={<h1>Team Task Manager</h1>} />
+          <Route path="/" element={<Home />} />
         </Routes>
       </Router>
     </>

@@ -1,3 +1,33 @@
+# Strictly follow the standards defined in this document 
+i want to make this project phase by phase
+
+IMPORTANT DEVELOPMENT RULES:
+
+- Follow existing project architecture strictly
+- Do NOT modify unrelated files
+- Do NOT redesign existing UI
+- Do NOT change folder structure unless requested
+- Do NOT add unnecessary libraries
+- Maintain full consistency with existing design system
+- Follow the Reddit-inspired dark orange theme
+- Maintain modular and reusable architecture
+- Keep components isolated and scalable
+- Use clean production-level code
+- Avoid code duplication
+- Use reusable utilities and constants
+- Follow existing naming conventions
+- Maintain responsive design
+- Maintain accessibility
+- Use smooth minimal animations only
+- Keep code interview-ready and enterprise-level
+
+IMPORTANT:
+Only perform the tasks explicitly mentioned in requested phase.
+Do not implement future phases.
+Do not overengineer features.
+Wait for next instructions after completing the current phase.
+
+
 # Team Task Manager — Design System & Development Standards
 
 ## Objective
