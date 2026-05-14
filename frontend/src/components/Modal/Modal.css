@@ -23,7 +23,7 @@
   );
   border: 1px solid rgba(var(--color-primary-rgb), 0.15);
   border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 20px 60px rgba(var(--color-black-rgb), 0.4);
   max-height: 90vh;
   overflow-y: auto;
   animation: modalSlideIn 0.3s ease-out;
@@ -68,14 +68,14 @@
 .modal-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: white;
+  color: var(--color-text-primary);
   margin: 0;
 }
 
 .modal-close-btn {
   background: none;
   border: none;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(var(--color-white-rgb), 0.6);
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0;

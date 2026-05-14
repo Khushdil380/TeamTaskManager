@@ -1,4 +1,4 @@
 .app {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f1115 0%, #161a22 100%);
+  background: linear-gradient(135deg, var(--color-bg-main) 0%, var(--color-bg-secondary) 100%);
 }

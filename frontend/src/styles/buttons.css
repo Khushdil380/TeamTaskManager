@@ -12,7 +12,7 @@ button {
 
 button:focus {
   outline: none;
-  box-shadow: 0 0 0 4px rgba(255, 106, 51, 0.18);
+  box-shadow: 0 0 0 4px rgba(var(--color-primary-rgb), 0.18);
 }
 
 button:disabled {
@@ -24,7 +24,7 @@ button:disabled {
 
 .btn-primary {
   background-color: var(--color-primary);
-  color: white;
+  color: var(--color-text-primary);
   padding: var(--space-md) var(--space-lg);
   box-shadow: var(--shadow-soft-card);
 }
@@ -58,11 +58,11 @@ button:disabled {
 
 .btn-danger {
   background-color: var(--color-danger);
-  color: white;
+  color: var(--color-text-primary);
   padding: var(--space-md) var(--space-lg);
 }
 
 .btn-danger:hover:not(:disabled) {
-  background-color: #dc2626;
+  background-color: var(--color-danger-hover);
   transform: scale(1.02);
 }

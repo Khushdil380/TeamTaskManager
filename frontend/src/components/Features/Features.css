@@ -40,14 +40,14 @@
 
 .feature-card {
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 106, 51, 0.1);
+  background: rgba(var(--color-white-rgb), 0.03);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.1);
   border-radius: 6px;
   transition: background 0.2s ease;
 }
 
 .feature-card:hover {
-  background: rgba(255, 106, 51, 0.08);
+  background: rgba(var(--color-primary-rgb), 0.08);
 }
 
 .feature-icon {

@@ -24,13 +24,13 @@
 .section-title {
   font-size: 2rem;
   font-weight: 700;
-  color: white;
+  color: var(--color-text-primary);
   margin-bottom: 0.5rem;
 }
 
 .section-subtitle {
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(var(--color-white-rgb), 0.9);
 }
 
 /* STEPS CONTAINER */
@@ -55,8 +55,8 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--color-primary);
-  background: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: var(--color-text-primary);
+  border: 1px solid rgba(var(--color-white-rgb), 0.3);
   width: 48px;
   height: 48px;
   min-width: 48px;
@@ -75,13 +75,13 @@
 .step-title {
   font-size: 1.1rem;
   font-weight: 600;
-  color: white;
+  color: var(--color-text-primary);
   margin-bottom: 0.3rem;
 }
 
 .step-description {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(var(--color-white-rgb), 0.95);
   line-height: 1.5;
 }
 
@@ -93,7 +93,7 @@
   top: 48px;
   width: 1px;
   height: 1.5rem;
-  background: rgba(255, 106, 51, 0.2);
+  background: rgba(var(--color-primary-rgb), 0.2);
 }
 
 /* RESPONSIVE */

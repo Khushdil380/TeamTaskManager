@@ -40,8 +40,8 @@
 
 .testimonial-card {
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 106, 51, 0.1);
+  background: rgba(var(--color-white-rgb), 0.03);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.1);
   border-radius: 6px;
   transition: background 0.2s ease;
   display: flex;
@@ -50,7 +50,7 @@
 }
 
 .testimonial-card:hover {
-  background: rgba(255, 106, 51, 0.08);
+  background: rgba(var(--color-primary-rgb), 0.08);
 }
 
 .testimonial-quote {
@@ -77,7 +77,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  color: white;
+  color: var(--color-text-primary);
   font-size: 0.75rem;
   flex-shrink: 0;
 }

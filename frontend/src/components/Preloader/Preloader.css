@@ -1,11 +1,18 @@
 /* PRELOADER STYLES - Pencil Animation */
 
 :root {
-  --preloader-primary: #ff6a33;
-  --preloader-secondary: #ff8b60;
-  --preloader-dark: #e85a26;
-  --preloader-bg: #ff6a33;
-  --preloader-text: #f8fafc;
+  --preloader-primary: var(--color-primary);
+  --preloader-secondary: var(--color-accent);
+  --preloader-dark: var(--color-primary-hover);
+  --preloader-bg: var(--color-primary);
+  --preloader-text: var(--color-text-primary);
+  /* SVG pencil artwork colors */
+  --preloader-paper-base: var(--color-text-primary);
+  --preloader-paper-gray: var(--color-text-secondary);
+  --preloader-paper-light: #e2e8f0;
+  --preloader-point-gold: #ffd700;
+  --preloader-point-amber: #ffa500;
+  --preloader-point-tip: #1f2937;
 }
 
 /* PRELOADER CONTAINER */
@@ -41,7 +48,7 @@
   display: block;
   width: 120px;
   height: 120px;
-  filter: drop-shadow(0 0 20px rgba(255, 106, 51, 0.2));
+  filter: drop-shadow(0 0 20px rgba(var(--color-primary-rgb), 0.2));
 }
 
 .pencil__body1,
@@ -104,10 +111,10 @@
 .preloader__text {
   margin-top: 30px;
   font-size: 20px;
-  color: #ffffff;
+  color: var(--preloader-text);
   font-weight: 700;
   letter-spacing: 3px;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 2px 8px rgba(var(--color-black-rgb), 0.2);
   animation: fadeInOut 2s ease-in-out infinite;
 }
 

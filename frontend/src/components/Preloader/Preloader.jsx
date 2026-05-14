@@ -49,58 +49,58 @@ const Preloader = () => {
           strokeDashoffset="439.82"
           strokeLinecap="round"
           transform="rotate(-113,100,100)"
-          style={{ stroke: "#FF6A33" }}
+          style={{ stroke: "var(--preloader-primary)" }}
         />
         <g className="pencil__rotate" transform="translate(100,100)">
           <g fill="none">
             <circle
               className="pencil__body1"
               r="64"
-              stroke="#FF6A33"
               strokeWidth="30"
               strokeDasharray="402.12 402.12"
               strokeDashoffset="402"
               transform="rotate(-90)"
+              style={{ stroke: "var(--preloader-primary)" }}
             />
             <circle
               className="pencil__body2"
               r="74"
-              stroke="#FF8B60"
               strokeWidth="10"
               strokeDasharray="464.96 464.96"
               strokeDashoffset="465"
               transform="rotate(-90)"
+              style={{ stroke: "var(--preloader-secondary)" }}
             />
             <circle
               className="pencil__body3"
               r="54"
-              stroke="#E85A26"
               strokeWidth="10"
               strokeDasharray="339.29 339.29"
               strokeDashoffset="339"
               transform="rotate(-90)"
+              style={{ stroke: "var(--preloader-dark)" }}
             />
           </g>
           <g className="pencil__eraser" transform="rotate(-90) translate(49,0)">
             <g className="pencil__eraser-skew">
-              <rect fill="#FF8B60" rx="5" ry="5" width="30" height="30" />
+              <rect style={{ fill: "var(--preloader-secondary)" }} rx="5" ry="5" width="30" height="30" />
               <rect
-                fill="#E85A26"
+                style={{ fill: "var(--preloader-dark)" }}
                 width="5"
                 height="30"
                 clipPath="url(#pencil-eraser)"
               />
-              <rect fill="#F8FAFC" width="30" height="20" />
-              <rect fill="#CBD5E1" width="15" height="20" />
-              <rect fill="#E2E8F0" width="5" height="20" />
+              <rect style={{ fill: "var(--preloader-paper-base)" }} width="30" height="20" />
+              <rect style={{ fill: "var(--preloader-paper-gray)" }} width="15" height="20" />
+              <rect style={{ fill: "var(--preloader-paper-light)" }} width="5" height="20" />
               <rect
-                fill="rgba(255, 106, 51, 0.2)"
+                style={{ fill: "rgba(var(--color-primary-rgb), 0.2)" }}
                 y="6"
                 width="30"
                 height="2"
               />
               <rect
-                fill="rgba(255, 106, 51, 0.2)"
+                style={{ fill: "rgba(var(--color-primary-rgb), 0.2)" }}
                 y="13"
                 width="30"
                 height="2"
@@ -111,9 +111,9 @@ const Preloader = () => {
             className="pencil__point"
             transform="rotate(-90) translate(49,-30)"
           >
-            <polygon fill="#FFD700" points="15 0,30 30,0 30" />
-            <polygon fill="#FFA500" points="15 0,6 30,0 30" />
-            <polygon fill="#1F2937" points="15 0,20 10,10 10" />
+            <polygon style={{ fill: "var(--preloader-point-gold)" }} points="15 0,30 30,0 30" />
+            <polygon style={{ fill: "var(--preloader-point-amber)" }} points="15 0,6 30,0 30" />
+            <polygon style={{ fill: "var(--preloader-point-tip)" }} points="15 0,20 10,10 10" />
           </g>
         </g>
       </svg>
