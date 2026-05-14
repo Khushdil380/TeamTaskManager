@@ -1,8 +1,7 @@
-/* FEATURES SECTION STYLES - Orange background */
+/* FEATURES SECTION STYLES - Dark background */
 
 .features {
   padding: 60px 2rem;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent)) !important;
 }
 
 .features-container {
@@ -20,13 +19,13 @@
 .section-title {
   font-size: 2rem;
   font-weight: 700;
-  color: white;
+  color: var(--color-text-primary);
   margin-bottom: 0.5rem;
 }
 
 .section-subtitle {
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-secondary);
 }
 
 /* FEATURES GRID */
@@ -41,14 +40,14 @@
 
 .feature-card {
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 106, 51, 0.1);
   border-radius: 6px;
   transition: background 0.2s ease;
 }
 
 .feature-card:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 106, 51, 0.08);
 }
 
 .feature-icon {
@@ -59,13 +58,13 @@
 .feature-title {
   font-size: 1.05rem;
   font-weight: 600;
-  color: white;
+  color: var(--color-text-primary);
   margin-bottom: 0.5rem;
 }
 
 .feature-description {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--color-text-secondary);
   line-height: 1.5;
 }
 

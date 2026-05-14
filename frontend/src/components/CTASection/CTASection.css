@@ -37,12 +37,13 @@
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
   margin-top: 0.5rem;
 }
 
 .cta-button:hover {
-  background: var(--accent-color);
+  background: var(--color-primary);
+  color: white;
 }
 
 /* RESPONSIVE */
