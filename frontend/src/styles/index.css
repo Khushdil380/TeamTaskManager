@@ -1,0 +1,31 @@
+/* STYLES INDEX - IMPORTS ALL STYLE FILES */
+
+/* 1. Colors & Variables */
+@import "./colors.css";
+
+/* 2. Typography */
+@import "./typography.css";
+
+/* 3. Spacing */
+@import "./spacing.css";
+
+/* 4. Shadows & Glows */
+@import "./shadows.css";
+
+/* 5. Animations & Transitions */
+@import "./animations.css";
+
+/* 6. Buttons */
+@import "./buttons.css";
+
+/* 7. Cards */
+@import "./cards.css";
+
+/* 8. Forms */
+@import "./forms.css";
+
+/* 9. Utilities */
+@import "./utilities.css";
+
+/* 10. Base & Resets (Always Last) */
+@import "./base.css";

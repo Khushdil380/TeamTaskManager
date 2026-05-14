@@ -1,0 +1,77 @@
+/* TEXT COLOR UTILITIES */
+
+.text-primary {
+  color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.text-disabled {
+  color: var(--color-text-disabled);
+}
+
+.text-success {
+  color: var(--color-success);
+}
+
+.text-warning {
+  color: var(--color-warning);
+}
+
+.text-danger {
+  color: var(--color-danger);
+}
+
+.text-info {
+  color: var(--color-info);
+}
+
+/* BACKGROUND COLOR UTILITIES */
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-success {
+  background-color: var(--color-success);
+}
+
+.bg-warning {
+  background-color: var(--color-warning);
+}
+
+.bg-danger {
+  background-color: var(--color-danger);
+}
+
+.bg-info {
+  background-color: var(--color-info);
+}
+
+.bg-card {
+  background-color: var(--color-bg-card);
+}
+
+.bg-surface {
+  background-color: var(--color-bg-surface);
+}
+
+/* BORDER COLOR UTILITIES */
+
+.border-primary {
+  border: 1px solid var(--color-border-primary);
+}
+
+.border-active {
+  border: 1px solid var(--color-border-active);
+}
+
+.border-soft {
+  border: 1px solid var(--color-border-soft);
+}

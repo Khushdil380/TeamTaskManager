@@ -1,0 +1,30 @@
+/* CARD & CONTAINER STYLES */
+
+.card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-card);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-soft-card);
+  transition: var(--transition-standard);
+}
+
+.card:hover {
+  background-color: var(--color-bg-elevated);
+  transform: translateY(-4px);
+  border-color: rgba(255, 106, 51, 0.25);
+  box-shadow: var(--shadow-hover);
+}
+
+.card.elevated {
+  background-color: var(--color-bg-elevated);
+  box-shadow: var(--shadow-elevated);
+}
+
+/* SURFACE */
+
+.surface {
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}

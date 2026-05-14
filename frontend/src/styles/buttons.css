@@ -1,0 +1,68 @@
+/* BUTTON STYLES */
+
+button {
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-md);
+  transition: var(--transition-standard);
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(255, 106, 51, 0.18);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* PRIMARY BUTTON */
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--space-md) var(--space-lg);
+  box-shadow: var(--shadow-soft-card);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+  transform: scale(1.02);
+  box-shadow: var(--glow-strong);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* SECONDARY BUTTON */
+
+.btn-secondary {
+  background-color: var(--color-bg-card);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-primary);
+  padding: var(--space-md) var(--space-lg);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-bg-elevated);
+  border-color: var(--color-border-active);
+  box-shadow: var(--glow-primary);
+}
+
+/* DANGER BUTTON */
+
+.btn-danger {
+  background-color: var(--color-danger);
+  color: white;
+  padding: var(--space-md) var(--space-lg);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: #dc2626;
+  transform: scale(1.02);
+}

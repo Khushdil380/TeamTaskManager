@@ -1,0 +1,31 @@
+/* COLORS - CSS VARIABLES */
+
+:root {
+  /* BRAND COLORS */
+  --color-primary: #FF6A33;
+  --color-primary-hover: #E85A26;
+  --color-accent: #FF8B60;
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+  --color-info: #3B82F6;
+
+  /* BACKGROUND COLORS */
+  --color-bg-main: #0F1115;
+  --color-bg-secondary: #161A22;
+  --color-bg-sidebar: #11151C;
+  --color-bg-card: #1B2230;
+  --color-bg-elevated: #222B3A;
+  --color-bg-surface: #1E2635;
+
+  /* TEXT COLORS */
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #CBD5E1;
+  --color-text-muted: #94A3B8;
+  --color-text-disabled: #64748B;
+
+  /* BORDER COLORS */
+  --color-border-primary: #2D3748;
+  --color-border-active: #FF6A33;
+  --color-border-soft: rgba(255, 255, 255, 0.06);
+}

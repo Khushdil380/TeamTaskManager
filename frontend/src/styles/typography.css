@@ -1,0 +1,74 @@
+/* TYPOGRAPHY - FONTS, SIZES, WEIGHTS */
+
+:root {
+  /* FONT FAMILY */
+  --font-family: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* FONT SIZES */
+  --font-size-heading-xl: 36px;
+  --font-size-heading-lg: 30px;
+  --font-size-heading-md: 24px;
+  --font-size-body: 16px;
+  --font-size-small: 14px;
+  --font-size-caption: 12px;
+
+  /* FONT WEIGHTS */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* LINE HEIGHT */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+}
+
+/* HEADING STYLES */
+
+h1,
+.h1 {
+  font-size: var(--font-size-heading-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.5px;
+}
+
+h2,
+.h2 {
+  font-size: var(--font-size-heading-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+h3,
+.h3 {
+  font-size: var(--font-size-heading-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+}
+
+/* PARAGRAPH & TEXT */
+
+p {
+  margin: 0;
+  line-height: var(--line-height-normal);
+}
+
+small,
+.text-small {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-regular);
+}
+
+.text-caption {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-regular);
+}

@@ -1,0 +1,55 @@
+/* SHADOWS & GLOWS */
+
+:root {
+  /* SHADOWS */
+  --shadow-soft-card: 0 4px 20px rgba(0, 0, 0, 0.18);
+  --shadow-elevated: 0 10px 40px rgba(0, 0, 0, 0.28);
+  --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.30);
+
+  /* GLOWS */
+  --glow-primary: 0 0 20px rgba(255, 106, 51, 0.18);
+  --glow-strong: 0 0 32px rgba(255, 106, 51, 0.28);
+}
+
+/* SHADOW UTILITIES */
+
+.shadow-soft {
+  box-shadow: var(--shadow-soft-card);
+}
+
+.shadow-elevated {
+  box-shadow: var(--shadow-elevated);
+}
+
+.shadow-hover {
+  box-shadow: var(--shadow-hover);
+}
+
+/* GLOW UTILITIES */
+
+.glow-primary {
+  box-shadow: var(--glow-primary);
+}
+
+.glow-strong {
+  box-shadow: var(--glow-strong);
+}
+
+/* HOVER & INTERACTION EFFECTS */
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  transition: var(--transition-standard);
+}
+
+.hover-glow:hover {
+  box-shadow: var(--glow-strong);
+  border-color: var(--color-border-active);
+  transition: var(--transition-standard);
+}
+
+.active {
+  border-color: var(--color-border-active);
+  box-shadow: var(--glow-primary);
+}
