@@ -21,16 +21,16 @@
 
 .footer-text {
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 .footer-credit {
   font-size: 0.8rem;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 .credit-highlight {
-  color: var(--primary-color);
+  color: var(--color-primary);
   font-weight: 600;
 }
 

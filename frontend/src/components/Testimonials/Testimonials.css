@@ -19,13 +19,13 @@
 .section-title {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   margin-bottom: 0.5rem;
 }
 
 .section-subtitle {
   font-size: 0.95rem;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 /* TESTIMONIALS GRID */
@@ -56,7 +56,7 @@
 .testimonial-quote {
   font-size: 0.95rem;
   font-style: italic;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   line-height: 1.6;
 }
 
@@ -72,7 +72,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--primary-color);
+  background: var(--color-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,13 +90,13 @@
 
 .author-name {
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   font-size: 0.9rem;
 }
 
 .author-role {
   font-size: 0.8rem;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 /* RESPONSIVE */

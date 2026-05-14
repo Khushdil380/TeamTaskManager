@@ -36,7 +36,7 @@
 .navbar-brand {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 }
 
 .navbar-right {
@@ -46,7 +46,7 @@
 }
 
 .navbar-link {
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
@@ -54,7 +54,7 @@
 }
 
 .navbar-link:hover {
-  color: var(--primary-color);
+  color: var(--color-primary);
 }
 
 /* RESPONSIVE */
