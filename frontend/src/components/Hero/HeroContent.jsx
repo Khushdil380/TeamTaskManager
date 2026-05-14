@@ -1,6 +1,6 @@
 import "./HeroContent.css";
 
-const HeroContent = () => {
+const HeroContent = ({ onOpenAuth }) => {
   return (
     <div className="hero-content">
       <h1 className="hero-title">
@@ -14,7 +14,7 @@ const HeroContent = () => {
         projects on track.
       </p>
 
-      <button className="hero-cta-button">
+      <button className="hero-cta-button" onClick={onOpenAuth}>
         <span className="button-text">Get Started</span>
         <span className="button-arrow">→</span>
       </button>

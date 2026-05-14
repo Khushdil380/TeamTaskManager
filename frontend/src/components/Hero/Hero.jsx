@@ -3,7 +3,7 @@ import "./Hero.css";
 import HeroContent from "./HeroContent";
 import DashboardMockup from "./DashboardMockup";
 
-const Hero = () => {
+const Hero = ({ onOpenAuth }) => {
   const heroRef = useRef(null);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const Hero = () => {
   return (
     <section className="hero" ref={heroRef}>
       <div className="hero-content-wrapper">
-        <HeroContent />
+        <HeroContent onOpenAuth={onOpenAuth} />
       </div>
       <div className="hero-mockup-wrapper">
         <DashboardMockup />

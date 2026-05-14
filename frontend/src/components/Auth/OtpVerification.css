@@ -1,0 +1,89 @@
+@import "./Auth.css";
+
+/* OTP VERIFICATION STYLES */
+
+.otp-verification {
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.otp-header {
+  text-align: center;
+  padding-bottom: 0.5rem;
+}
+
+.otp-message {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.otp-message strong {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.otp-input {
+  text-align: center;
+  font-size: 1.5rem !important;
+  letter-spacing: 0.5rem;
+  font-weight: 600;
+  font-family: monospace;
+  padding: 1rem !important;
+}
+
+.otp-input::placeholder {
+  letter-spacing: 0.5rem;
+}
+
+.otp-timer {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.otp-timer strong {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.otp-timer strong.expired {
+  color: var(--color-danger);
+}
+
+.otp-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(var(--color-primary-rgb), 0.1);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .otp-verification {
+    min-height: auto;
+  }
+
+  .otp-input {
+    font-size: 1.25rem !important;
+  }
+
+  .otp-actions {
+    gap: 0.5rem;
+    flex-direction: column;
+  }
+
+  .link-button {
+    width: 100%;
+    text-align: center;
+  }
+}

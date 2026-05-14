@@ -1,6 +1,6 @@
 import "./CTASection.css";
 
-const CTASection = () => {
+const CTASection = ({ onOpenAuth }) => {
   return (
     <section className="cta-section">
       <div className="cta-container">
@@ -9,7 +9,9 @@ const CTASection = () => {
           Join hundreds of teams already managing tasks smarter with Team Task
           Manager.
         </p>
-        <button className="cta-button">Start Your Free Trial Today</button>
+        <button className="cta-button" onClick={onOpenAuth}>
+          Start Your Free Trial Today
+        </button>
       </div>
     </section>
   );

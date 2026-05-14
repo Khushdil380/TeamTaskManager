@@ -1,0 +1,47 @@
+@import "./Auth.css";
+
+/* SIGNUP FORM STYLES */
+
+.signup-form {
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Form row for side-by-side fields */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  gap: 0.4rem;
+}
+
+.form-row .form-group label {
+  font-size: 0.85rem;
+}
+
+.form-row .form-group input {
+  font-size: 0.9rem;
+  padding: 0.65rem 0.85rem;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .signup-form {
+    min-height: auto;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .form-row .form-group input {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}

@@ -1,0 +1,16 @@
+/* DASHBOARD PAGE — Layout wrapper only */
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--color-bg-main);
+  color: var(--color-text-primary);
+  overflow: hidden;
+}
+
+.dashboard-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
