@@ -1,85 +1,34 @@
-/* HERO SECTION STYLES */
+/* HERO SECTION STYLES - Minimal vertical layout */
 
 .hero {
-  min-height: 100vh;
-  padding: 120px 2rem 80px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-  max-width: 1400px;
+  min-height: auto;
+  padding: 100px 2rem 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 1200px;
   margin: 0 auto;
   position: relative;
-  overflow: hidden;
 }
 
 .hero-content-wrapper {
   display: flex;
   align-items: center;
-  min-height: 500px;
+  min-height: auto;
 }
 
 .hero-mockup-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  perspective: 1000px;
-}
-
-/* ANIMATIONS */
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.hero.visible .hero-mockup-wrapper {
-  animation: slideInRight 0.8s ease-out forwards;
+  width: 100%;
 }
 
 /* RESPONSIVE */
-
-@media (max-width: 1024px) {
-  .hero {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    padding: 100px 2rem 60px;
-  }
-
-  .hero-mockup-wrapper {
-    min-height: 400px;
-  }
-}
 
 @media (max-width: 768px) {
   .hero {
     padding: 80px 1.5rem 40px;
     gap: 2rem;
-  }
-
-  .hero-content-wrapper {
-    min-height: 300px;
-  }
-
-  .hero-mockup-wrapper {
-    min-height: 300px;
-    transform: scale(0.85);
   }
 }

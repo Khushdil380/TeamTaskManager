@@ -1,4 +1,4 @@
-/* BACKGROUND ANIMATION - Minimalistic moving elements */
+/* BACKGROUND ANIMATION - Minimal background with subtle elements */
 
 .background-animation {
   position: fixed;
@@ -11,49 +11,40 @@
   background: linear-gradient(135deg, var(--bg-primary) 0%, #1a1f28 100%);
 }
 
-/* ============================================================================
-   ANIMATED ORBS (Blurred circles with gradient)
-   ============================================================================ */
+/* ANIMATED ORBS */
 
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.15;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
+  filter: blur(60px);
+  opacity: 0.1;
 }
 
 .orb-1 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
-  top: -100px;
-  left: -100px;
-  animation: float-orb-1 15s infinite;
-}
-
-.orb-2 {
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
-  bottom: -150px;
-  right: -50px;
-  animation: float-orb-2 18s infinite;
-}
-
-.orb-3 {
   width: 300px;
   height: 300px;
   background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
-  top: 50%;
-  right: -100px;
-  animation: float-orb-3 20s infinite;
+  top: -50px;
+  left: -50px;
 }
 
-/* ============================================================================
-   FLOATING PARTICLES
-   ============================================================================ */
+.orb-2 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+  bottom: -100px;
+  right: -50px;
+}
+
+.orb-3 {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
+  top: 50%;
+  right: -80px;
+}
+
+/* PARTICLES */
 
 .particles {
   position: absolute;
@@ -63,118 +54,39 @@
 
 .particle {
   position: absolute;
-  width: 4px;
-  height: 4px;
+  width: 2px;
+  height: 2px;
   background: var(--primary-color);
   border-radius: 50%;
-  opacity: 0.4;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
+  opacity: 0.3;
 }
 
 .particle-1 {
   top: 20%;
   left: 10%;
-  animation: float-particle 8s infinite;
 }
 
 .particle-2 {
   top: 40%;
   left: 50%;
-  animation: float-particle 10s infinite;
-  animation-delay: 1s;
 }
 
 .particle-3 {
   top: 60%;
   left: 80%;
-  animation: float-particle 12s infinite;
-  animation-delay: 2s;
 }
 
 .particle-4 {
   top: 30%;
   right: 15%;
-  animation: float-particle 9s infinite;
-  animation-delay: 0.5s;
 }
 
 .particle-5 {
   top: 70%;
   right: 30%;
-  animation: float-particle 11s infinite;
-  animation-delay: 1.5s;
 }
 
 .particle-6 {
   top: 50%;
   left: 30%;
-  animation: float-particle 13s infinite;
-  animation-delay: 2.5s;
-}
-
-/* ============================================================================
-   ANIMATIONS
-   ============================================================================ */
-
-@keyframes float-orb-1 {
-  0% {
-    transform: translate(0, 0);
-  }
-  33% {
-    transform: translate(30px, -50px);
-  }
-  66% {
-    transform: translate(-20px, 40px);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes float-orb-2 {
-  0% {
-    transform: translate(0, 0);
-  }
-  33% {
-    transform: translate(-40px, 50px);
-  }
-  66% {
-    transform: translate(30px, -30px);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes float-orb-3 {
-  0% {
-    transform: translate(0, 0);
-  }
-  33% {
-    transform: translate(40px, 30px);
-  }
-  66% {
-    transform: translate(-30px, -40px);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes float-particle {
-  0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0;
-  }
-  25% {
-    opacity: 0.4;
-  }
-  75% {
-    opacity: 0.4;
-  }
-  100% {
-    transform: translate(0, -100px) scale(0.5);
-    opacity: 0;
-  }
 }
