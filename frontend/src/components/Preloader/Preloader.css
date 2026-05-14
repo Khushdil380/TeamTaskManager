@@ -103,10 +103,11 @@
 
 .preloader__text {
   margin-top: 30px;
-  font-size: 14px;
-  color: var(--preloader-secondary);
-  font-weight: 600;
-  letter-spacing: 2px;
+  font-size: 20px;
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   animation: fadeInOut 2s ease-in-out infinite;
 }
 
