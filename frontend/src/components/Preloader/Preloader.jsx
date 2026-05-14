@@ -84,15 +84,33 @@ const Preloader = () => {
           <g className="pencil__eraser" transform="rotate(-90) translate(49,0)">
             <g className="pencil__eraser-skew">
               <rect fill="#FF8B60" rx="5" ry="5" width="30" height="30" />
-              <rect fill="#E85A26" width="5" height="30" clipPath="url(#pencil-eraser)" />
+              <rect
+                fill="#E85A26"
+                width="5"
+                height="30"
+                clipPath="url(#pencil-eraser)"
+              />
               <rect fill="#F8FAFC" width="30" height="20" />
               <rect fill="#CBD5E1" width="15" height="20" />
               <rect fill="#E2E8F0" width="5" height="20" />
-              <rect fill="rgba(255, 106, 51, 0.2)" y="6" width="30" height="2" />
-              <rect fill="rgba(255, 106, 51, 0.2)" y="13" width="30" height="2" />
+              <rect
+                fill="rgba(255, 106, 51, 0.2)"
+                y="6"
+                width="30"
+                height="2"
+              />
+              <rect
+                fill="rgba(255, 106, 51, 0.2)"
+                y="13"
+                width="30"
+                height="2"
+              />
             </g>
           </g>
-          <g className="pencil__point" transform="rotate(-90) translate(49,-30)">
+          <g
+            className="pencil__point"
+            transform="rotate(-90) translate(49,-30)"
+          >
             <polygon fill="#FFD700" points="15 0,30 30,0 30" />
             <polygon fill="#FFA500" points="15 0,6 30,0 30" />
             <polygon fill="#1F2937" points="15 0,20 10,10 10" />
