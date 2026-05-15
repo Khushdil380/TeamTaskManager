@@ -1,6 +1,7 @@
 # Deploying Team Task Manager on Railway
 
 This guide deploys **two separate Railway services** from the same GitHub repo:
+
 - `backend` — Node.js / Express API
 - `frontend` — React / Vite (served via `vite preview`)
 
@@ -35,15 +36,15 @@ This guide deploys **two separate Railway services** from the same GitHub repo:
 
 Go to the service → **Variables** tab and add:
 
-| Variable | Value |
-|---|---|
-| `MONGODB_URI` | Your Atlas connection string |
-| `JWT_SECRET` | A long random secret string |
-| `EMAIL_SERVICE` | `gmail` |
-| `EMAIL_USER` | Your Gmail address |
-| `EMAIL_PASSWORD` | Gmail App Password |
-| `NODE_ENV` | `production` |
-| `FRONTEND_URL` | *(fill in after Step 2 — see note below)* |
+| Variable         | Value                                     |
+| ---------------- | ----------------------------------------- |
+| `MONGODB_URI`    | Your Atlas connection string              |
+| `JWT_SECRET`     | A long random secret string               |
+| `EMAIL_SERVICE`  | `gmail`                                   |
+| `EMAIL_USER`     | Your Gmail address                        |
+| `EMAIL_PASSWORD` | Gmail App Password                        |
+| `NODE_ENV`       | `production`                              |
+| `FRONTEND_URL`   | _(fill in after Step 2 — see note below)_ |
 
 > `PORT` is injected by Railway automatically — do **not** add it.
 
@@ -74,8 +75,8 @@ Go to the service → **Variables** tab and add:
 
 Go to the service → **Variables** tab and add:
 
-| Variable | Value |
-|---|---|
+| Variable       | Value                                                                            |
+| -------------- | -------------------------------------------------------------------------------- |
 | `VITE_API_URL` | Backend URL from Step 1.4, e.g. `https://backend-production-xxxx.up.railway.app` |
 
 > `VITE_API_URL` is a **build-time** variable — Railway bakes it into the built JS bundle during `npm run build`. If you ever change the backend URL, re-deploy the frontend.
@@ -131,19 +132,19 @@ The backend stays on Railway. No code changes needed.
 
 ### Backend (`backend/.env.example`)
 
-| Variable | Required | Description |
-|---|---|---|
-| `MONGODB_URI` | ✅ | MongoDB Atlas connection string |
-| `JWT_SECRET` | ✅ | Secret key for JWT signing (use a long random string) |
-| `FRONTEND_URL` | ✅ | Frontend origin for CORS |
-| `EMAIL_SERVICE` | ✅ | Email provider (`gmail`) |
-| `EMAIL_USER` | ✅ | Gmail address for sending OTP emails |
-| `EMAIL_PASSWORD` | ✅ | Gmail App Password |
-| `NODE_ENV` | ✅ | Set to `production` |
-| `PORT` | ❌ | Injected by Railway automatically |
+| Variable         | Required | Description                                           |
+| ---------------- | -------- | ----------------------------------------------------- |
+| `MONGODB_URI`    | ✅       | MongoDB Atlas connection string                       |
+| `JWT_SECRET`     | ✅       | Secret key for JWT signing (use a long random string) |
+| `FRONTEND_URL`   | ✅       | Frontend origin for CORS                              |
+| `EMAIL_SERVICE`  | ✅       | Email provider (`gmail`)                              |
+| `EMAIL_USER`     | ✅       | Gmail address for sending OTP emails                  |
+| `EMAIL_PASSWORD` | ✅       | Gmail App Password                                    |
+| `NODE_ENV`       | ✅       | Set to `production`                                   |
+| `PORT`           | ❌       | Injected by Railway automatically                     |
 
 ### Frontend (`frontend/.env.example`)
 
-| Variable | Required | Description |
-|---|---|---|
-| `VITE_API_URL` | ✅ | Backend Railway URL (no trailing slash) |
+| Variable       | Required | Description                             |
+| -------------- | -------- | --------------------------------------- |
+| `VITE_API_URL` | ✅       | Backend Railway URL (no trailing slash) |
