@@ -7,6 +7,9 @@ import { connectDB } from "./config/database.js";
 import authRoutes from "./routes/authRoutes.js";
 import teamRoutes from "./routes/teamRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
+import messageRoutes from "./routes/messageRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,6 +36,9 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/team", teamRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/tasks", taskRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 // Basic Routes
 app.get("/api/health", (req, res) => {

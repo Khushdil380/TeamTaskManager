@@ -67,7 +67,9 @@ const DashboardNavbar = ({
                 ? "Search members by name or email…"
                 : activeTab === "projects"
                   ? "Search projects by title or description…"
-                  : "Search projects, members, tasks…"
+                  : activeTab === "members"
+                    ? "Search team members by name or email…"
+                    : "Search projects, members, tasks…"
             }
             value={searchQuery || ""}
             onChange={(e) => onSearchChange?.(e.target.value)}

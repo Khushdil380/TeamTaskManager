@@ -33,7 +33,7 @@ const CreateProjectModal = ({ onClose, onSaved, editProject }) => {
   const [error, setError] = useState("");
 
   const descLen = form.description.length;
-  const descValid = descLen >= 120 && descLen <= 200;
+  const descValid = descLen >= 20 && descLen <= 200;
   const canSubmit = form.title.trim() && descValid && !loading;
 
   const handleChange = (e) => {
@@ -110,17 +110,17 @@ const CreateProjectModal = ({ onClose, onSaved, editProject }) => {
           name="description"
           value={form.description}
           onChange={handleChange}
-          placeholder="Describe the project goals and scope… (120–200 characters)"
+          placeholder="Describe goals and scope… (20–200 characters)"
           disabled={loading}
         />
         <span
           className={`proj-modal-hint${!form.description || descValid ? "" : " error"}`}
         >
-          {descLen} / 200 characters{descLen < 120 ? ` (min 120)` : ""}
+          {descLen} / 200{descLen < 20 ? ` — min 20` : ""}
         </span>
       </div>
 
-      {/* Priority + Due Date — side by side */}
+      {/* Priority + Due Date + Status — all in one line */}
       <div className="proj-modal-row">
         <div className="proj-modal-field">
           <label className="proj-modal-label">Priority</label>
@@ -150,24 +150,23 @@ const CreateProjectModal = ({ onClose, onSaved, editProject }) => {
             disabled={loading}
           />
         </div>
-      </div>
 
-      {/* Status */}
-      <div className="proj-modal-field">
-        <label className="proj-modal-label">Status</label>
-        <select
-          className="proj-modal-select"
-          name="status"
-          value={form.status}
-          onChange={handleChange}
-          disabled={loading}
-        >
-          {STATUS_OPTIONS.map((s) => (
-            <option key={s.value} value={s.value}>
-              {s.label}
-            </option>
-          ))}
-        </select>
+        <div className="proj-modal-field">
+          <label className="proj-modal-label">Status</label>
+          <select
+            className="proj-modal-select"
+            name="status"
+            value={form.status}
+            onChange={handleChange}
+            disabled={loading}
+          >
+            {STATUS_OPTIONS.map((s) => (
+              <option key={s.value} value={s.value}>
+                {s.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {error && <p className="proj-modal-error">{error}</p>}

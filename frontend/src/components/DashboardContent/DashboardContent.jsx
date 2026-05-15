@@ -3,8 +3,9 @@ import DashboardHome from "./DashboardHome";
 import ComingSoon from "./ComingSoon";
 import ManageUsers from "../ManageUsers/ManageUsers";
 import Projects from "../Projects/Projects";
+import TeamMembers from "../TeamMembers/TeamMembers";
 
-const FULL_TABS = ["manage-users", "projects"];
+const FULL_TABS = ["manage-users", "projects", "members"];
 
 const DashboardContent = ({ activeTab, user, role, searchQuery }) => (
   <main
@@ -13,11 +14,13 @@ const DashboardContent = ({ activeTab, user, role, searchQuery }) => (
     }`}
   >
     {activeTab === "dashboard" ? (
-      <DashboardHome user={user} />
+      <DashboardHome user={user} role={role} />
     ) : activeTab === "manage-users" ? (
       <ManageUsers searchQuery={searchQuery} />
     ) : activeTab === "projects" ? (
-      <Projects searchQuery={searchQuery} />
+      <Projects searchQuery={searchQuery} user={user} role={role} />
+    ) : activeTab === "members" ? (
+      <TeamMembers searchQuery={searchQuery} />
     ) : (
       <ComingSoon tabId={activeTab} />
     )}

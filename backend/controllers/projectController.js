@@ -27,9 +27,9 @@ export const createProject = async (req, res) => {
         .status(400)
         .json({ message: "Title and description are required." });
     }
-    if (description.length < 120 || description.length > 200) {
+    if (description.length < 20 || description.length > 200) {
       return res.status(400).json({
-        message: "Description must be between 120 and 200 characters.",
+        message: "Description must be between 20 and 200 characters.",
       });
     }
 
@@ -60,7 +60,10 @@ export const getProjects = async (req, res) => {
     const decoded = decodeToken(req);
     const { priority, status, sort } = req.query;
 
-    const filter = { adminId: decoded.userId };
+    // Admin sees own projects; members see projects they're assigned to
+    const filter = {
+      $or: [{ adminId: decoded.userId }, { members: decoded.userId }],
+    };
     if (priority) filter.priority = priority;
     if (status) filter.status = status;
 
@@ -83,9 +86,9 @@ export const updateProject = async (req, res) => {
     const { title, description, priority, dueDate, status } = req.body;
 
     if (description !== undefined) {
-      if (description.length < 120 || description.length > 200) {
+      if (description.length < 20 || description.length > 200) {
         return res.status(400).json({
-          message: "Description must be between 120 and 200 characters.",
+          message: "Description must be between 20 and 200 characters.",
         });
       }
     }
@@ -216,7 +219,63 @@ export const checkProjectUser = async (req, res) => {
         .json({ message: "No account found for this email." });
     }
 
-    res.json({ _id: user._id, fullName: user.fullName, email: user.email, avatar: user.avatar });
+    res.json({
+      _id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      avatar: user.avatar,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// GET /api/projects/team-members  — all unique members across admin's projects
+export const getProjectTeamMembers = async (req, res) => {
+  try {
+    const decoded = decodeToken(req);
+
+    const projects = await Project.find({ adminId: decoded.userId })
+      .select("_id title color status priority members")
+      .populate("members", "fullName email avatar");
+
+    // Build a map: userId → { user info + list of projects they're in }
+    const memberMap = new Map();
+
+    for (const project of projects) {
+      for (const member of project.members) {
+        const uid = member._id.toString();
+        if (!memberMap.has(uid)) {
+          memberMap.set(uid, {
+            _id: member._id,
+            fullName: member.fullName,
+            email: member.email,
+            avatar: member.avatar,
+            projects: [],
+          });
+        }
+        memberMap.get(uid).projects.push({
+          _id: project._id,
+          title: project.title,
+          color: project.color,
+          status: project.status,
+          priority: project.priority,
+        });
+      }
+    }
+
+    const members = Array.from(memberMap.values()).map((m) => ({
+      ...m,
+      projectCount: m.projects.length,
+      completedCount: m.projects.filter((p) => p.status === "completed").length,
+      inProgressCount: m.projects.filter((p) => p.status === "in-progress")
+        .length,
+    }));
+
+    // Sort by most projects first
+    members.sort((a, b) => b.projectCount - a.projectCount);
+
+    res.json({ members });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

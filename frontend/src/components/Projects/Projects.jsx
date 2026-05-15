@@ -3,32 +3,14 @@ import "./Projects.css";
 import Modal from "../Modal/Modal";
 import CreateProjectModal from "./CreateProjectModal";
 import ProjectMembersModal from "./ProjectMembersModal";
+import ProjectDetail from "../ProjectDetail/ProjectDetail";
 import { getAuthToken } from "../../utils/auth";
+import { PROJECT_STATUS_LABEL } from "../../utils/taskConfig";
+import { formatDate, isOverdue } from "../../utils/helpers";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const STATUS_LABEL = {
-  "in-progress": "In Progress",
-  completed: "Completed",
-  "on-hold": "On Hold",
-  cancelled: "Cancelled",
-};
-
-const formatDue = (dateStr) => {
-  if (!dateStr) return null;
-  return new Date(dateStr).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-};
-
-const isOverdue = (dateStr, status) => {
-  if (!dateStr || status === "completed" || status === "cancelled") return false;
-  return new Date(dateStr) < new Date();
-};
-
-const Projects = ({ searchQuery = "" }) => {
+const Projects = ({ searchQuery = "", user, role = "member" }) => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -37,6 +19,9 @@ const Projects = ({ searchQuery = "" }) => {
   const [filterPriority, setFilterPriority] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [filterSort, setFilterSort] = useState("");
+
+  // Workspace
+  const [selectedProject, setSelectedProject] = useState(null);
 
   // Modals
   const [showCreate, setShowCreate] = useState(false);
@@ -91,6 +76,7 @@ const Projects = ({ searchQuery = "" }) => {
   };
 
   const handleDelete = async (id) => {
+    if (!window.confirm("Delete this project? This cannot be undone.")) return;
     setProjects((prev) => prev.filter((p) => p._id !== id));
     try {
       const res = await fetch(`${API_URL}/api/projects/${id}`, {
@@ -117,6 +103,22 @@ const Projects = ({ searchQuery = "" }) => {
       p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.description.toLowerCase().includes(searchQuery.toLowerCase()),
   );
+
+  // If a project is selected, show full workspace
+  if (selectedProject) {
+    return (
+      <ProjectDetail
+        project={selectedProject}
+        user={user}
+        role={role}
+        onBack={() => setSelectedProject(null)}
+        onProjectUpdated={(proj) => {
+          handleProjectSaved(proj);
+          setSelectedProject(proj);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="projects">
@@ -171,11 +173,16 @@ const Projects = ({ searchQuery = "" }) => {
           )}
         </div>
 
-        {/* Right: create button */}
-        <button className="proj-create-btn" onClick={() => setShowCreate(true)}>
-          <span>+</span>
-          <span>New Project</span>
-        </button>
+        {/* Right: create button — admin only */}
+        {role === "admin" && (
+          <button
+            className="proj-create-btn"
+            onClick={() => setShowCreate(true)}
+          >
+            <span>+</span>
+            <span>New Project</span>
+          </button>
+        )}
       </div>
 
       {/* Card grid */}
@@ -202,9 +209,12 @@ const Projects = ({ searchQuery = "" }) => {
                 <ProjectCard
                   key={p._id}
                   project={p}
+                  onOpen={() => setSelectedProject(p)}
                   onEdit={() => setEditProject(p)}
                   onDelete={() => handleDelete(p._id)}
                   onMembers={() => setMembersProject(p)}
+                  isAdmin={p.adminId?.toString() === user?._id?.toString()}
+                  role={role}
                 />
               ))
             )}
@@ -263,18 +273,30 @@ const Projects = ({ searchQuery = "" }) => {
 };
 
 /* ── Project Card ── */
-const ProjectCard = ({ project, onEdit, onDelete, onMembers }) => {
-  const due = formatDue(project.dueDate);
+const ProjectCard = ({
+  project,
+  onOpen,
+  onEdit,
+  onDelete,
+  onMembers,
+  isAdmin,
+  role = "member",
+}) => {
+  const due = formatDate(project.dueDate);
   const overdue = isOverdue(project.dueDate, project.status);
 
   return (
-    <div className="proj-card">
-      <div className={`proj-card-stripe proj-stripe-${project.color}`} />
-
-      <div className="proj-card-body">
-        {/* Meta row */}
+    <div className="proj-card" onClick={onOpen} style={{ cursor: "pointer" }}>
+      {/* Coloured header band — contains meta row */}
+      <div className={`proj-card-header proj-stripe-${project.color}`}>
         <div className="proj-card-meta">
-          <button className="proj-members-btn" onClick={onMembers}>
+          <button
+            className="proj-members-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              onMembers();
+            }}
+          >
             <span className="proj-members-icon">👥</span>
             <span className="proj-members-count">
               {project.members?.length || 0}
@@ -297,36 +319,43 @@ const ProjectCard = ({ project, onEdit, onDelete, onMembers }) => {
             )}
           </div>
         </div>
+      </div>
 
-        {/* Title + description */}
+      <div className="proj-card-body">
         <h3 className="proj-card-title">{project.title}</h3>
         <p className="proj-card-desc">{project.description}</p>
       </div>
 
       {/* Footer */}
       <div className="proj-card-footer">
-        <span
-          className={`proj-status-badge proj-status-${project.status}`}
-        >
-          {STATUS_LABEL[project.status]}
+        <span className={`proj-status-badge proj-status-${project.status}`}>
+          {PROJECT_STATUS_LABEL[project.status]}
         </span>
 
-        <div className="proj-card-actions">
-          <button
-            className="proj-action-btn"
-            onClick={onEdit}
-            title="Edit project"
-          >
-            ✏️
-          </button>
-          <button
-            className="proj-action-btn danger"
-            onClick={onDelete}
-            title="Delete project"
-          >
-            🗑️
-          </button>
-        </div>
+        {role === "admin" && isAdmin && (
+          <div className="proj-card-actions">
+            <button
+              className="proj-action-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit();
+              }}
+              title="Edit project"
+            >
+              ✏️
+            </button>
+            <button
+              className="proj-action-btn danger"
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete();
+              }}
+              title="Delete project"
+            >
+              🗑️
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

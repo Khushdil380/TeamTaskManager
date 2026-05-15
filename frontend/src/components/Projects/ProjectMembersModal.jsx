@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Projects.css";
 import { getAuthToken } from "../../utils/auth";
 import { getAvatarById } from "../../utils/avatarConfig";
@@ -6,51 +6,40 @@ import { getAvatarById } from "../../utils/avatarConfig";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const ProjectMembersModal = ({ project, onProjectUpdated }) => {
-  const [email, setEmail] = useState("");
-  const [verifyStatus, setVerifyStatus] = useState("idle"); // idle|loading|found|error
-  const [foundUser, setFoundUser] = useState(null);
-  const [verifyError, setVerifyError] = useState("");
-  const [addLoading, setAddLoading] = useState(false);
+  const [orgMembers, setOrgMembers] = useState([]);
+  const [loadingOrg, setLoadingOrg] = useState(true);
+  const [search, setSearch] = useState("");
+  const [actionLoading, setActionLoading] = useState(null); // userId being processed
+  const [error, setError] = useState("");
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    if (verifyStatus !== "idle") {
-      setVerifyStatus("idle");
-      setFoundUser(null);
-      setVerifyError("");
-    }
-  };
+  useEffect(() => {
+    fetchOrgMembers();
+  }, []);
 
-  const handleVerify = async (e) => {
-    e.preventDefault();
-    if (!email.trim()) return;
-
-    setVerifyStatus("loading");
-    setVerifyError("");
-    setFoundUser(null);
-
+  const fetchOrgMembers = async () => {
+    setLoadingOrg(true);
     try {
-      const res = await fetch(
-        `${API_URL}/api/projects/check-user?email=${encodeURIComponent(email.trim())}`,
-        { headers: { Authorization: `Bearer ${getAuthToken()}` } },
-      );
+      const res = await fetch(`${API_URL}/api/team/members`, {
+        headers: { Authorization: `Bearer ${getAuthToken()}` },
+      });
       const data = await res.json();
-      if (!res.ok) {
-        setVerifyError(data.message);
-        setVerifyStatus("error");
-      } else {
-        setFoundUser(data);
-        setVerifyStatus("found");
-      }
+      if (res.ok) setOrgMembers(data.members || []);
     } catch {
-      setVerifyError("Network error. Please try again.");
-      setVerifyStatus("error");
+      // silent
+    } finally {
+      setLoadingOrg(false);
     }
   };
 
-  const handleAdd = async () => {
-    setAddLoading(true);
-    setVerifyError("");
+  // memberId from team response is a plain userId string
+  const isInProject = (userId) =>
+    (project.members || []).some(
+      (m) => (m._id || m).toString() === userId.toString(),
+    );
+
+  const handleAdd = async (member) => {
+    setActionLoading(member.memberId);
+    setError("");
     try {
       const res = await fetch(
         `${API_URL}/api/projects/${project._id}/members`,
@@ -60,26 +49,22 @@ const ProjectMembersModal = ({ project, onProjectUpdated }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getAuthToken()}`,
           },
-          body: JSON.stringify({ email: email.trim() }),
+          body: JSON.stringify({ email: member.email }),
         },
       );
       const data = await res.json();
-      if (!res.ok) {
-        setVerifyError(data.message);
-      } else {
-        onProjectUpdated(data.project);
-        setEmail("");
-        setVerifyStatus("idle");
-        setFoundUser(null);
-      }
+      if (!res.ok) setError(data.message);
+      else onProjectUpdated(data.project);
     } catch {
-      setVerifyError("Network error. Please try again.");
+      setError("Network error. Please try again.");
     } finally {
-      setAddLoading(false);
+      setActionLoading(null);
     }
   };
 
   const handleRemove = async (userId) => {
+    setActionLoading(userId);
+    setError("");
     try {
       const res = await fetch(
         `${API_URL}/api/projects/${project._id}/members/${userId}`,
@@ -89,101 +74,90 @@ const ProjectMembersModal = ({ project, onProjectUpdated }) => {
         },
       );
       const data = await res.json();
-      if (res.ok) {
-        onProjectUpdated(data.project);
-      }
+      if (!res.ok) setError(data.message);
+      else onProjectUpdated(data.project);
     } catch {
-      // silent — optimistic update not needed, list stays intact
+      setError("Network error. Please try again.");
+    } finally {
+      setActionLoading(null);
     }
   };
 
-  const currentMembers = project.members || [];
+  const filtered = search.trim()
+    ? orgMembers
+        .filter((m) => {
+          const q = search.toLowerCase();
+          return (
+            m.fullName.toLowerCase().includes(q) ||
+            m.email.toLowerCase().includes(q)
+          );
+        })
+        .slice(0, 5)
+    : [];
 
   return (
     <div className="pmm-body">
-      {/* Add by email */}
-      <form className="pmm-add-form" onSubmit={handleVerify}>
-        <div className="pmm-add-row">
-          <input
-            className="pmm-input"
-            type="email"
-            value={email}
-            onChange={handleEmailChange}
-            placeholder="member@example.com"
-            autoFocus
-            disabled={verifyStatus === "loading"}
-          />
-          <button
-            type="submit"
-            className="pmm-verify-btn"
-            disabled={!email.trim() || verifyStatus === "loading"}
-          >
-            {verifyStatus === "loading" ? "Checking…" : "Verify"}
-          </button>
-        </div>
+      {/* Search organisation members */}
+      <input
+        className="pmm-input"
+        type="text"
+        value={search}
+        onChange={(e) => {
+          setSearch(e.target.value);
+          setError("");
+        }}
+        placeholder="Type a name or email to search…"
+        autoFocus
+      />
 
-        {verifyStatus === "found" && foundUser && (
-          <div className="pmm-found">
-            <div
-              className="pmm-avatar"
-              style={{ background: getAvatarById(foundUser.avatar).bg }}
-            >
-              {getAvatarById(foundUser.avatar).icon}
-            </div>
-            <div className="pmm-found-info">
-              <span className="pmm-found-name">{foundUser.fullName}</span>
-              <span className="pmm-found-email">{foundUser.email}</span>
-            </div>
-            <button
-              type="button"
-              className="pmm-add-btn"
-              onClick={handleAdd}
-              disabled={addLoading}
-            >
-              {addLoading ? "Adding…" : "Add"}
-            </button>
-          </div>
-        )}
+      {error && <p className="pmm-error">{error}</p>}
 
-        {verifyError && <p className="pmm-error">{verifyError}</p>}
-      </form>
-
-      {/* Current members list */}
-      {currentMembers.length > 0 && (
-        <>
-          <div className="pmm-divider" />
-          <span className="pmm-members-title">
-            Current Members ({currentMembers.length})
-          </span>
-          <div className="pmm-members-list">
-            {currentMembers.map((m) => (
+      {loadingOrg ? (
+        <p className="pmm-no-members">Loading…</p>
+      ) : !search.trim() ? (
+        <p className="pmm-no-members">Start typing to find members.</p>
+      ) : filtered.length === 0 ? (
+        <p className="pmm-no-members">No matches for "{search}"</p>
+      ) : (
+        <div className="pmm-members-list">
+          {filtered.map((m) => {
+            const inProject = isInProject(m.memberId);
+            const loading =
+              actionLoading !== null &&
+              actionLoading.toString() === m.memberId.toString();
+            const av = getAvatarById(m.avatar);
+            return (
               <div key={m._id} className="pmm-member-row">
-                <div
-                  className="pmm-avatar"
-                  style={{ background: getAvatarById(m.avatar).bg }}
-                >
-                  {getAvatarById(m.avatar).icon}
+                <div className="pmm-avatar" style={{ background: av.bg }}>
+                  {av.icon}
                 </div>
                 <div className="pmm-member-info">
                   <div className="pmm-member-name">{m.fullName}</div>
                   <div className="pmm-member-email">{m.email}</div>
                 </div>
-                <button
-                  className="pmm-remove-btn"
-                  onClick={() => handleRemove(m._id)}
-                  title="Remove from project"
-                  type="button"
-                >
-                  🗑️
-                </button>
+                {inProject ? (
+                  <button
+                    className="pmm-remove-btn"
+                    onClick={() => handleRemove(m.memberId)}
+                    disabled={loading}
+                    type="button"
+                  >
+                    {loading ? "…" : "Remove"}
+                  </button>
+                ) : (
+                  <button
+                    className="pmm-add-btn"
+                    onClick={() => handleAdd(m)}
+                    disabled={loading}
+                    type="button"
+                  >
+                    {loading ? "…" : "Add"}
+                  </button>
+                )}
               </div>
-            ))}
-          </div>
-        </>
-      )}
-
-      {currentMembers.length === 0 && (
-        <p className="pmm-no-members">No members added yet.</p>
+            );
+          })}
+        </div>
       )}
     </div>
   );
