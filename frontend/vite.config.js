@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     port: parseInt(process.env.VITE_PORT || "3000"),
     strictPort: false,
-    allowedHosts: ["all"],
+    allowedHosts: true,
     proxy: {
       "/api": {
         target: "http://localhost:5000",
@@ -18,6 +18,6 @@ export default defineConfig({
   preview: {
     port: 8080,
     strictPort: false,
-    allowedHosts: ["all"],
+    allowedHosts: true,
   },
 });
