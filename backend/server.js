@@ -41,6 +41,10 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
 // Basic Routes
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "TeamTaskManager API is running" });
+});
+
 app.get("/api/health", (req, res) => {
   res.status(200).json({
     message: "Server is running",
