@@ -7,8 +7,18 @@ const API = import.meta.env.VITE_API_URL;
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTHS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 // Build a map: "YYYY-MM-DD" → task[]
@@ -71,19 +81,30 @@ export default function Calendar({ role }) {
   }, [fetchTasks]);
 
   const prevMonth = () => {
-    if (month === 0) { setMonth(11); setYear((y) => y - 1); }
-    else setMonth((m) => m - 1);
+    if (month === 0) {
+      setMonth(11);
+      setYear((y) => y - 1);
+    } else setMonth((m) => m - 1);
   };
 
   const nextMonth = () => {
-    if (month === 11) { setMonth(0); setYear((y) => y + 1); }
-    else setMonth((m) => m + 1);
+    if (month === 11) {
+      setMonth(0);
+      setYear((y) => y + 1);
+    } else setMonth((m) => m + 1);
   };
 
-  const goToday = () => { setYear(today.getFullYear()); setMonth(today.getMonth()); };
+  const goToday = () => {
+    setYear(today.getFullYear());
+    setMonth(today.getMonth());
+  };
 
   const cells = getMonthCells(year, month);
-  const todayKey = toKey(today.getFullYear(), today.getMonth(), today.getDate());
+  const todayKey = toKey(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate(),
+  );
 
   const handleDayEnter = (key, e) => {
     if (!taskMap[key]) return;
@@ -104,15 +125,33 @@ export default function Calendar({ role }) {
       <div className="cal-header">
         <div className="cal-heading">
           <h2 className="cal-title">Calendar</h2>
-          <p className="cal-sub">Tasks due dates across your projects</p>
+          <p className="cal-sub">
+            {role === "admin"
+              ? "Task deadlines across all your projects"
+              : "Tasks due dates across your projects"}
+          </p>
         </div>
         <div className="cal-nav">
-          <button className="cal-nav-btn" onClick={prevMonth} aria-label="Previous month">‹</button>
+          <button
+            className="cal-nav-btn"
+            onClick={prevMonth}
+            aria-label="Previous month"
+          >
+            ‹
+          </button>
           <span className="cal-month-label">
             {MONTHS[month]} {year}
           </span>
-          <button className="cal-nav-btn" onClick={nextMonth} aria-label="Next month">›</button>
-          <button className="cal-today-btn" onClick={goToday}>Today</button>
+          <button
+            className="cal-nav-btn"
+            onClick={nextMonth}
+            aria-label="Next month"
+          >
+            ›
+          </button>
+          <button className="cal-today-btn" onClick={goToday}>
+            Today
+          </button>
         </div>
       </div>
 
@@ -125,14 +164,22 @@ export default function Calendar({ role }) {
           {/* Weekday headers */}
           <div className="cal-grid cal-grid--head">
             {WEEKDAYS.map((d) => (
-              <div key={d} className="cal-weekday">{d}</div>
+              <div key={d} className="cal-weekday">
+                {d}
+              </div>
             ))}
           </div>
 
           {/* Day cells */}
           <div className="cal-grid cal-grid--body">
             {cells.map((day, i) => {
-              if (!day) return <div key={`empty-${i}`} className="cal-cell cal-cell--empty" />;
+              if (!day)
+                return (
+                  <div
+                    key={`empty-${i}`}
+                    className="cal-cell cal-cell--empty"
+                  />
+                );
 
               const key = toKey(year, month, day);
               const tasks = taskMap[key] || [];
@@ -158,40 +205,58 @@ export default function Calendar({ role }) {
                           className="cal-dot"
                           style={{
                             background: t.project?.color
-                              ? STRIPE_COLORS[t.project.color] ?? STRIPE_COLORS[1]
+                              ? (STRIPE_COLORS[t.project.color] ??
+                                STRIPE_COLORS[1])
                               : STRIPE_COLORS[1],
                           }}
                         />
                       ))}
-                      {extra > 0 && <span className="cal-dot-extra">+{extra}</span>}
+                      {extra > 0 && (
+                        <span className="cal-dot-extra">+{extra}</span>
+                      )}
                     </div>
                   )}
 
                   {/* Tooltip */}
                   {hasTasks && hoveredKey === key && (
-                    <div className={`cal-tooltip${tooltipPos.above ? " cal-tooltip--above" : " cal-tooltip--below"}`}>
+                    <div
+                      className={`cal-tooltip${tooltipPos.above ? " cal-tooltip--above" : " cal-tooltip--below"}`}
+                    >
                       <div className="cal-tooltip-arrow" />
                       <ul className="cal-tooltip-list">
                         {tasks.map((t) => {
                           const dotColor = t.project?.color
-                            ? STRIPE_COLORS[t.project.color] ?? STRIPE_COLORS[1]
+                            ? (STRIPE_COLORS[t.project.color] ??
+                              STRIPE_COLORS[1])
                             : STRIPE_COLORS[1];
-                          const statusCfg = TASK_STATUS_CFG[t.status] ?? TASK_STATUS_CFG.todo;
+                          const statusCfg =
+                            TASK_STATUS_CFG[t.status] ?? TASK_STATUS_CFG.todo;
                           return (
                             <li key={t._id} className="cal-tooltip-item">
-                              <span className="cal-tooltip-dot" style={{ background: dotColor }} />
+                              <span
+                                className="cal-tooltip-dot"
+                                style={{ background: dotColor }}
+                              />
                               <div className="cal-tooltip-info">
-                                <span className="cal-tooltip-project">{t.project?.title ?? "—"}</span>
-                                <span className="cal-tooltip-task">{t.title}</span>
-                                {t.description && (
-                                  <span className="cal-tooltip-desc">{t.description}</span>
-                                )}
-                                <span
-                                  className="cal-tooltip-status"
-                                  style={{ color: statusCfg.color }}
-                                >
-                                  {statusCfg.label}
+                                <span className="cal-tooltip-project">
+                                  {t.project?.title ?? "—"}
                                 </span>
+                                <span className="cal-tooltip-task">
+                                  {t.title}
+                                </span>
+                                {t.description && (
+                                  <span className="cal-tooltip-desc">
+                                    {t.description}
+                                  </span>
+                                )}
+                                {role !== "admin" && (
+                                  <span
+                                    className="cal-tooltip-status"
+                                    style={{ color: statusCfg.color }}
+                                  >
+                                    {statusCfg.label}
+                                  </span>
+                                )}
                               </div>
                             </li>
                           );
@@ -209,7 +274,10 @@ export default function Calendar({ role }) {
       {/* Legend */}
       <div className="cal-legend">
         <span className="cal-legend-item">
-          <span className="cal-legend-dot" style={{ background: "var(--color-primary)" }} />
+          <span
+            className="cal-legend-dot"
+            style={{ background: "var(--color-primary)" }}
+          />
           Tasks due
         </span>
         <span className="cal-legend-item cal-legend-today">

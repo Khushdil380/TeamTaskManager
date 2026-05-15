@@ -23,7 +23,7 @@ const DashboardContent = ({ activeTab, user, role, searchQuery }) => (
       <Projects searchQuery={searchQuery} user={user} role={role} />
     ) : activeTab === "members" ? (
       <TeamMembers searchQuery={searchQuery} role={role} user={user} />
-    ) : activeTab === "my-tasks" ? (
+    ) : activeTab === "my-tasks" && role !== "admin" ? (
       <MyTasks user={user} />
     ) : activeTab === "calendar" ? (
       <Calendar role={role} />

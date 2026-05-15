@@ -17,17 +17,21 @@ export const getUserRole = () =>
 
 export const setUserRole = (role) => localStorage.setItem(USER_ROLE_KEY, role);
 
-export const MEMBER_NAV_ITEMS = [
+const BASE_NAV_ITEMS = [
   { id: "dashboard", label: "Dashboard", icon: "📊" },
-  { id: "my-tasks", label: "My Tasks", icon: "✅" },
   { id: "projects", label: "Projects", icon: "📁" },
   { id: "calendar", label: "Calendar", icon: "📅" },
   { id: "members", label: "Team Members", icon: "👥" },
 ];
 
+export const MEMBER_NAV_ITEMS = [
+  BASE_NAV_ITEMS[0],
+  { id: "my-tasks", label: "My Tasks", icon: "✅" },
+  ...BASE_NAV_ITEMS.slice(1),
+];
+
 export const ADMIN_NAV_ITEMS = [
-  ...MEMBER_NAV_ITEMS,
-  { id: "chats", label: "Project Chats", icon: "💬" },
+  ...BASE_NAV_ITEMS,
   { id: "manage-users", label: "Manage Users", icon: "⚙️" },
   { id: "reports", label: "Reports", icon: "📈" },
   { id: "settings", label: "Settings", icon: "🔧" },
