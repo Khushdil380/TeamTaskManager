@@ -16,11 +16,10 @@ const formatDate = (dateStr) => {
   });
 };
 
-const ManageUsers = () => {
+const ManageUsers = ({ searchQuery = "" }) => {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
   const [bulkResult, setBulkResult] = useState(null);
   const fileInputRef = useRef(null);
@@ -125,7 +124,6 @@ const ManageUsers = () => {
       {/* Toolbar */}
       <div className="mu-toolbar">
         <div className="mu-toolbar-left">
-          <h1 className="mu-title">Manage Users</h1>
           <span className="mu-count">
             {members.length} member{members.length !== 1 ? "s" : ""}
           </span>
@@ -177,49 +175,11 @@ const ManageUsers = () => {
               </span>
             )}
           </div>
-          <button
-            className="mu-bulk-close"
-            onClick={() => setBulkResult(null)}
-          >
+          <button className="mu-bulk-close" onClick={() => setBulkResult(null)}>
             ✕
           </button>
         </div>
       )}
-
-      {/* Search */}
-      <div className="mu-search-bar">
-        <div className="mu-search-wrapper">
-          <svg
-            className="mu-search-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            width="15"
-            height="15"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.35-4.35" />
-          </svg>
-          <input
-            className="mu-search-input"
-            type="text"
-            placeholder="Search by name or email…"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          {searchQuery && (
-            <button
-              className="mu-search-clear"
-              onClick={() => setSearchQuery("")}
-            >
-              ✕
-            </button>
-          )}
-        </div>
-      </div>
 
       {/* Member list */}
       <div className="mu-list-wrapper">

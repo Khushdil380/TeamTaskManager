@@ -7,6 +7,9 @@ import { getAvatarById } from "../../utils/avatarConfig";
 const DashboardNavbar = ({
   user,
   role,
+  activeTab,
+  searchQuery,
+  onSearchChange,
   onRoleSwitch,
   onLogout,
   onMenuToggle,
@@ -59,7 +62,15 @@ const DashboardNavbar = ({
           <input
             type="text"
             className="dash-search-input"
-            placeholder="Search projects, members, tasks..."
+            placeholder={
+              activeTab === "manage-users"
+                ? "Search members by name or email…"
+                : activeTab === "projects"
+                  ? "Search projects by title or description…"
+                  : "Search projects, members, tasks…"
+            }
+            value={searchQuery || ""}
+            onChange={(e) => onSearchChange?.(e.target.value)}
             aria-label="Search"
           />
         </div>

@@ -22,8 +22,7 @@ export const checkUser = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({
-        message:
-          "No account found for this email. They must register first.",
+        message: "No account found for this email. They must register first.",
       });
     }
 
@@ -108,9 +107,7 @@ export const addMember = async (req, res) => {
     });
 
     if (existing) {
-      return res
-        .status(400)
-        .json({ message: "User is already in your team." });
+      return res.status(400).json({ message: "User is already in your team." });
     }
 
     const member = await TeamMember.create({

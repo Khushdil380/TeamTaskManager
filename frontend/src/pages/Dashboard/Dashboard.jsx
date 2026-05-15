@@ -18,6 +18,7 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const token = getAuthToken();
@@ -43,6 +44,7 @@ const Dashboard = () => {
 
   const handleTabChange = (tabId) => {
     setActiveTab(tabId);
+    setSearchQuery("");
     setIsSidebarOpen(false);
   };
 
@@ -59,6 +61,9 @@ const Dashboard = () => {
       <DashboardNavbar
         user={user}
         role={role}
+        activeTab={activeTab}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
         onRoleSwitch={handleRoleSwitch}
         onLogout={handleLogout}
         onMenuToggle={() => setIsSidebarOpen((prev) => !prev)}
@@ -72,7 +77,12 @@ const Dashboard = () => {
           isOpen={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
         />
-        <DashboardContent activeTab={activeTab} user={user} role={role} />
+        <DashboardContent
+          activeTab={activeTab}
+          user={user}
+          role={role}
+          searchQuery={searchQuery}
+        />
       </div>
 
       <Modal
