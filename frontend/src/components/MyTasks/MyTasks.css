@@ -1,0 +1,367 @@
+/* MY TASKS — flat list of tasks assigned to the current user */
+
+.mytasks {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0.25rem 0 2rem;
+}
+
+/* ── Topbar: title + filters on one row ── */
+.mytasks-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.mytasks-heading {
+  flex-shrink: 0;
+}
+
+.mytasks-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 0.2rem;
+}
+
+.mytasks-sub {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ── Filter tabs ── */
+.mytasks-filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+
+.mytasks-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.mytasks-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.mytasks-filter-btn:hover {
+  background: rgba(255, 106, 51, 0.08);
+  color: var(--color-text-primary);
+  border-color: var(--color-primary);
+}
+
+.mytasks-filter-btn.active {
+  background: rgba(255, 106, 51, 0.15);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.mytasks-filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.mytasks-filter-btn.active .mytasks-filter-count {
+  background: rgba(255, 106, 51, 0.25);
+}
+
+/* ── Loading / empty states ── */
+.mytasks-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  gap: 0.75rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.mytasks-error {
+  color: #f87171;
+}
+
+.mytasks-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 106, 51, 0.2);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: mytasks-spin 0.7s linear infinite;
+}
+
+@keyframes mytasks-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mytasks-empty-icon {
+  font-size: 2.5rem;
+  margin: 0;
+  opacity: 0.3;
+}
+
+.mytasks-empty-text {
+  margin: 0;
+  opacity: 0.7;
+}
+
+.mytasks-retry-btn {
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  background: rgba(248, 113, 113, 0.15);
+  color: #f87171;
+  border: 1px solid #f8717155;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+/* ── Task list ── */
+.mytasks-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* ── Task row ── */
+.mytask-row {
+  display: flex;
+  align-items: stretch;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-primary);
+  border-radius: 10px;
+  overflow: hidden;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.mytask-row:hover {
+  border-color: rgba(255, 106, 51, 0.35);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+.mytask-row.completed {
+  opacity: 0.65;
+}
+
+.mytask-row.completed:hover {
+  opacity: 0.85;
+}
+
+/* Priority left accent bar */
+.mytask-priority-accent {
+  flex-shrink: 0;
+  width: 4px;
+}
+
+.mytask-body {
+  flex: 1;
+  padding: 0.5rem 0.85rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+/* Left: title + description stacked */
+.mytask-left {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.mytask-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+
+.mytask-row.completed .mytask-title {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+/* ── Right: chips + status ── */
+.mytask-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ── Status select ── */
+.mytask-status-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.mytask-status-select {
+  padding: 0.28rem 0.6rem;
+  border-radius: 5px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-width: 1px;
+  border-style: solid;
+  cursor: pointer;
+  outline: none;
+  transition: opacity 0.15s;
+  /* Browser default background overridden inline via style prop */
+}
+
+.mytask-status-select option {
+  background: var(--color-bg-main);
+  color: var(--color-text-primary);
+}
+
+.mytask-updating-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  animation: mytasks-pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes mytasks-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* ── Description ── */
+.mytask-desc {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+
+/* ── Meta chips row ── */
+.mytask-meta {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mytask-project-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mytask-project-dot {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.mytask-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.mytask-deadline.overdue {
+  color: #f87171 !important;
+  background: rgba(239, 68, 68, 0.15) !important;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .mytasks-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .mytasks-filters {
+    width: 100%;
+  }
+
+  .mytask-body {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .mytask-left {
+    width: 100%;
+  }
+
+  .mytask-title,
+  .mytask-desc {
+    max-width: 100%;
+  }
+
+  .mytask-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .mytask-meta {
+    flex-wrap: wrap;
+  }
+}

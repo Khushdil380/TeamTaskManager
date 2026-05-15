@@ -636,15 +636,6 @@ const TaskCard = ({
             </span>
           )}
         </div>
-
-        {task.status === "completed" && task.completedBy && (
-          <div className="pd-completed-by">
-            <AvatarBubble avatarId={task.completedBy.avatar} size={18} />
-            <span className="pd-completed-by-text">
-              Completed by <strong>{task.completedBy.fullName}</strong>
-            </span>
-          </div>
-        )}
       </div>
     </div>
   );

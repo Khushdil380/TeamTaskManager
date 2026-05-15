@@ -4,6 +4,8 @@ import ComingSoon from "./ComingSoon";
 import ManageUsers from "../ManageUsers/ManageUsers";
 import Projects from "../Projects/Projects";
 import TeamMembers from "../TeamMembers/TeamMembers";
+import MyTasks from "../MyTasks/MyTasks";
+import Calendar from "../Calendar/Calendar";
 
 const FULL_TABS = ["manage-users", "projects", "members"];
 
@@ -21,6 +23,10 @@ const DashboardContent = ({ activeTab, user, role, searchQuery }) => (
       <Projects searchQuery={searchQuery} user={user} role={role} />
     ) : activeTab === "members" ? (
       <TeamMembers searchQuery={searchQuery} role={role} user={user} />
+    ) : activeTab === "my-tasks" ? (
+      <MyTasks user={user} />
+    ) : activeTab === "calendar" ? (
+      <Calendar role={role} />
     ) : (
       <ComingSoon tabId={activeTab} />
     )}

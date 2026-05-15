@@ -22,12 +22,12 @@ export const MEMBER_NAV_ITEMS = [
   { id: "my-tasks", label: "My Tasks", icon: "✅" },
   { id: "projects", label: "Projects", icon: "📁" },
   { id: "calendar", label: "Calendar", icon: "📅" },
-  { id: "chats", label: "Project Chats", icon: "💬" },
   { id: "members", label: "Team Members", icon: "👥" },
 ];
 
 export const ADMIN_NAV_ITEMS = [
   ...MEMBER_NAV_ITEMS,
+  { id: "chats", label: "Project Chats", icon: "💬" },
   { id: "manage-users", label: "Manage Users", icon: "⚙️" },
   { id: "reports", label: "Reports", icon: "📈" },
   { id: "settings", label: "Settings", icon: "🔧" },

@@ -171,3 +171,88 @@ export const deleteTask = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// GET /api/tasks/my-tasks ï¿½ all tasks assigned to the current user, sorted by deadline
+export const getMyTasks = async (req, res) => {
+  try {
+    const { userId } = decodeToken(req);
+
+    const tasks = await Task.find({ assignedTo: userId })
+      .populate("projectId", "title color")
+      .populate("assignedBy", "fullName avatar");
+
+    // Sort: soonest deadline first, tasks without deadline at the end
+    const withDeadline = tasks
+      .filter((t) => t.deadline)
+      .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+    const withoutDeadline = tasks
+      .filter((t) => !t.deadline)
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    const sorted = [...withDeadline, ...withoutDeadline];
+
+    res.json({
+      tasks: sorted.map((t) => ({
+        _id: t._id,
+        title: t.title,
+        description: t.description,
+        status: t.status,
+        priority: t.priority,
+        deadline: t.deadline,
+        createdAt: t.createdAt,
+        project: t.projectId
+          ? {
+              _id: t.projectId._id,
+              title: t.projectId.title,
+              color: t.projectId.color,
+            }
+          : null,
+        assignedBy: t.assignedBy
+          ? {
+              _id: t.assignedBy._id,
+              fullName: t.assignedBy.fullName,
+              avatar: t.assignedBy.avatar,
+            }
+          : null,
+      })),
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// GET /api/tasks/calendar?view=admin|member — tasks with deadlines for calendar display
+export const getCalendarTasks = async (req, res) => {
+  try {
+    const { userId } = decodeToken(req);
+    const { view } = req.query;
+
+    let tasks;
+    if (view === "admin") {
+      const projects = await Project.find({ adminId: userId }).select("_id");
+      const projectIds = projects.map((p) => p._id);
+      tasks = await Task.find({ projectId: { $in: projectIds }, deadline: { $ne: null } })
+        .populate("projectId", "title color")
+        .select("title description deadline projectId status");
+    } else {
+      tasks = await Task.find({ assignedTo: userId, deadline: { $ne: null } })
+        .populate("projectId", "title color")
+        .select("title description deadline projectId status");
+    }
+
+    res.json({
+      tasks: tasks.map((t) => ({
+        _id: t._id,
+        title: t.title,
+        description: t.description,
+        deadline: t.deadline,
+        status: t.status,
+        project: t.projectId
+          ? { _id: t.projectId._id, title: t.projectId.title, color: t.projectId.color }
+          : null,
+      })),
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
