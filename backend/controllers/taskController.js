@@ -27,7 +27,6 @@ export const getTasks = async (req, res) => {
 
     await verifyProjectAccess(projectId, decoded.userId);
 
-    // Member view: only tasks assigned to the requesting user
     const taskFilter = { projectId };
     if (view === "member") {
       taskFilter.assignedTo = decoded.userId;
@@ -50,26 +49,14 @@ export const getTasks = async (req, res) => {
 export const createTask = async (req, res) => {
   try {
     const decoded = decodeToken(req);
-    const {
-      projectId,
-      title,
-      description,
-      assignedTo,
-      deadline,
-      priority,
-      status,
-    } = req.body;
+    const { projectId, title, description, assignedTo, deadline, priority, status } = req.body;
 
     if (!projectId || !title)
-      return res
-        .status(400)
-        .json({ message: "projectId and title are required." });
+      return res.status(400).json({ message: "projectId and title are required." });
 
     const { isAdmin } = await verifyProjectAccess(projectId, decoded.userId);
     if (!isAdmin)
-      return res
-        .status(403)
-        .json({ message: "Only the project admin can create tasks." });
+      return res.status(403).json({ message: "Only the project admin can create tasks." });
 
     const task = await Task.create({
       projectId,
@@ -99,27 +86,18 @@ export const updateTask = async (req, res) => {
     const task = await Task.findById(req.params.id);
     if (!task) return res.status(404).json({ message: "Task not found." });
 
-    const { isAdmin } = await verifyProjectAccess(
-      task.projectId,
-      decoded.userId,
-    );
-    const isAssigned = task.assignedTo
-      ?.map(String)
-      .includes(decoded.userId.toString());
+    const { isAdmin } = await verifyProjectAccess(task.projectId, decoded.userId);
+    const isAssigned = task.assignedTo?.map(String).includes(decoded.userId.toString());
 
     if (!isAdmin && !isAssigned)
       return res.status(403).json({ message: "Access denied." });
 
     if (isAdmin) {
-      // Admin: full edit
-      const { title, description, assignedTo, deadline, priority, status } =
-        req.body;
+      const { title, description, assignedTo, deadline, priority, status } = req.body;
       if (title !== undefined) task.title = title.trim();
       if (description !== undefined) task.description = description.trim();
       if (assignedTo !== undefined)
-        task.assignedTo = Array.isArray(assignedTo)
-          ? assignedTo.filter(Boolean)
-          : [];
+        task.assignedTo = Array.isArray(assignedTo) ? assignedTo.filter(Boolean) : [];
       if (deadline !== undefined) task.deadline = deadline || null;
       if (priority !== undefined) task.priority = priority;
       if (status !== undefined) {
@@ -128,7 +106,6 @@ export const updateTask = async (req, res) => {
         else task.completedBy = null;
       }
     } else {
-      // Assigned member: only status
       if (req.body.status) {
         task.status = req.body.status;
         if (req.body.status === "completed") task.completedBy = decoded.userId;
@@ -156,14 +133,9 @@ export const deleteTask = async (req, res) => {
     const task = await Task.findById(req.params.id);
     if (!task) return res.status(404).json({ message: "Task not found." });
 
-    const { isAdmin } = await verifyProjectAccess(
-      task.projectId,
-      decoded.userId,
-    );
+    const { isAdmin } = await verifyProjectAccess(task.projectId, decoded.userId);
     if (!isAdmin)
-      return res
-        .status(403)
-        .json({ message: "Only the project admin can delete tasks." });
+      return res.status(403).json({ message: "Only the project admin can delete tasks." });
 
     await task.deleteOne();
     res.json({ message: "Task deleted." });
@@ -172,7 +144,7 @@ export const deleteTask = async (req, res) => {
   }
 };
 
-// GET /api/tasks/my-tasks ï¿½ all tasks assigned to the current user, sorted by deadline
+// GET /api/tasks/my-tasks
 export const getMyTasks = async (req, res) => {
   try {
     const { userId } = decodeToken(req);
@@ -181,7 +153,6 @@ export const getMyTasks = async (req, res) => {
       .populate("projectId", "title color")
       .populate("assignedBy", "fullName avatar");
 
-    // Sort: soonest deadline first, tasks without deadline at the end
     const withDeadline = tasks
       .filter((t) => t.deadline)
       .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
@@ -201,18 +172,10 @@ export const getMyTasks = async (req, res) => {
         deadline: t.deadline,
         createdAt: t.createdAt,
         project: t.projectId
-          ? {
-              _id: t.projectId._id,
-              title: t.projectId.title,
-              color: t.projectId.color,
-            }
+          ? { _id: t.projectId._id, title: t.projectId.title, color: t.projectId.color }
           : null,
         assignedBy: t.assignedBy
-          ? {
-              _id: t.assignedBy._id,
-              fullName: t.assignedBy.fullName,
-              avatar: t.assignedBy.avatar,
-            }
+          ? { _id: t.assignedBy._id, fullName: t.assignedBy.fullName, avatar: t.assignedBy.avatar }
           : null,
       })),
     });
@@ -221,7 +184,7 @@ export const getMyTasks = async (req, res) => {
   }
 };
 
-// GET /api/tasks/calendar?view=admin|member — tasks with deadlines for calendar display
+// GET /api/tasks/calendar?view=admin|member
 export const getCalendarTasks = async (req, res) => {
   try {
     const { userId } = decodeToken(req);
