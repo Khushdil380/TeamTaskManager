@@ -30,19 +30,20 @@ const Projects = ({ searchQuery = "", user, role = "member" }) => {
 
   useEffect(() => {
     fetchProjects();
-  }, [filterPriority, filterStatus, filterSort]);
+  }, [filterPriority, filterStatus, filterSort, role]);
 
   const fetchProjects = async () => {
     setLoading(true);
     setError("");
     try {
       const params = new URLSearchParams();
+      params.set("view", role === "admin" ? "admin" : "member");
       if (filterPriority) params.set("priority", filterPriority);
       if (filterStatus) params.set("status", filterStatus);
       if (filterSort) params.set("sort", filterSort);
 
       const res = await fetch(
-        `${API_URL}/api/projects${params.toString() ? "?" + params : ""}`,
+        `${API_URL}/api/projects?${params}`,
         { headers: { Authorization: `Bearer ${getAuthToken()}` } },
       );
       const data = await res.json();

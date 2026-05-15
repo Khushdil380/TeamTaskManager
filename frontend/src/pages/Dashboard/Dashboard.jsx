@@ -27,8 +27,23 @@ const Dashboard = () => {
       navigate("/");
       return;
     }
-    setUser(userData);
-    setRole(getUserRole());
+
+    // Verify token is still valid with the backend
+    fetch(
+      `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/auth/verify-token`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    )
+      .then((res) => {
+        if (!res.ok) throw new Error("Invalid token");
+        setUser(userData);
+        setRole(getUserRole());
+      })
+      .catch(() => {
+        clearAuthData();
+        navigate("/");
+      });
   }, [navigate]);
 
   const handleRoleSwitch = (newRole) => {

@@ -17,17 +17,23 @@ const verifyProjectAccess = async (projectId, userId) => {
   return { project, isAdmin };
 };
 
-// GET /api/tasks?projectId=
+// GET /api/tasks?projectId=&view=admin|member
 export const getTasks = async (req, res) => {
   try {
     const decoded = decodeToken(req);
-    const { projectId } = req.query;
+    const { projectId, view } = req.query;
     if (!projectId)
       return res.status(400).json({ message: "projectId is required." });
 
     await verifyProjectAccess(projectId, decoded.userId);
 
-    const tasks = await Task.find({ projectId })
+    // Member view: only tasks assigned to the requesting user
+    const taskFilter = { projectId };
+    if (view === "member") {
+      taskFilter.assignedTo = decoded.userId;
+    }
+
+    const tasks = await Task.find(taskFilter)
       .sort({ createdAt: -1 })
       .populate("assignedTo", "fullName email avatar")
       .populate("assignedBy", "fullName avatar")

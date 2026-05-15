@@ -95,9 +95,11 @@ const ProjectDetail = ({
   /* ── Fetch tasks ── */
   const fetchTasks = useCallback(async () => {
     try {
-      const res = await fetch(`${API_URL}/api/tasks?projectId=${project._id}`, {
-        headers: authHeader,
-      });
+      const view = role === "admin" ? "admin" : "member";
+      const res = await fetch(
+        `${API_URL}/api/tasks?projectId=${project._id}&view=${view}`,
+        { headers: authHeader },
+      );
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to load tasks");
       setTasks(data.tasks);
@@ -106,7 +108,7 @@ const ProjectDetail = ({
     } finally {
       setLoadingTasks(false);
     }
-  }, [project._id]);
+  }, [project._id, role]);
 
   /* ── Fetch messages ── */
   const fetchMessages = useCallback(

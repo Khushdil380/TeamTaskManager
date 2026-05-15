@@ -58,12 +58,14 @@ export const createProject = async (req, res) => {
 export const getProjects = async (req, res) => {
   try {
     const decoded = decodeToken(req);
-    const { priority, status, sort } = req.query;
+    const { priority, status, sort, view } = req.query;
 
-    // Admin sees own projects; members see projects they're assigned to
-    const filter = {
-      $or: [{ adminId: decoded.userId }, { members: decoded.userId }],
-    };
+    // Scope projects by role: admin sees own projects, member sees joined projects
+    const filter =
+      view === "member"
+        ? { members: decoded.userId }
+        : { adminId: decoded.userId };
+
     if (priority) filter.priority = priority;
     if (status) filter.status = status;
 

@@ -15,10 +15,13 @@ export const getDashboardStats = async (req, res) => {
     const { userId } = decodeToken(req);
     const viewMode = req.query.view === "member" ? "member" : "admin";
 
-    // All projects the user administers or is a member of
-    const projects = await Project.find({
-      $or: [{ adminId: userId }, { members: userId }],
-    })
+    // Scope projects by view mode
+    const projectFilter =
+      viewMode === "member"
+        ? { members: userId }
+        : { adminId: userId };
+
+    const projects = await Project.find(projectFilter)
       .sort({ createdAt: -1 })
       .populate("members", "fullName avatar");
 

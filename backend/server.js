@@ -20,9 +20,19 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
+const productionOrigin = (process.env.FRONTEND_URL || "").replace(/\/$/, "");
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    origin: (origin, callback) => {
+      // Allow requests with no origin (mobile apps, curl, etc.)
+      if (!origin) return callback(null, true);
+      // Allow any localhost port in development
+      if (/^http:\/\/localhost:\d+$/.test(origin)) return callback(null, true);
+      // Allow production frontend
+      if (productionOrigin && origin === productionOrigin)
+        return callback(null, true);
+      callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   }),
 );
