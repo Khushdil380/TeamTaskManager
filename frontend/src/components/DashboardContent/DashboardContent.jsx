@@ -20,7 +20,7 @@ const DashboardContent = ({ activeTab, user, role, searchQuery }) => (
     ) : activeTab === "projects" ? (
       <Projects searchQuery={searchQuery} user={user} role={role} />
     ) : activeTab === "members" ? (
-      <TeamMembers searchQuery={searchQuery} />
+      <TeamMembers searchQuery={searchQuery} role={role} user={user} />
     ) : (
       <ComingSoon tabId={activeTab} />
     )}

@@ -42,10 +42,9 @@ const Projects = ({ searchQuery = "", user, role = "member" }) => {
       if (filterStatus) params.set("status", filterStatus);
       if (filterSort) params.set("sort", filterSort);
 
-      const res = await fetch(
-        `${API_URL}/api/projects?${params}`,
-        { headers: { Authorization: `Bearer ${getAuthToken()}` } },
-      );
+      const res = await fetch(`${API_URL}/api/projects?${params}`, {
+        headers: { Authorization: `Bearer ${getAuthToken()}` },
+      });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to load projects");
       setProjects(data.projects);

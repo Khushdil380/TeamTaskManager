@@ -232,7 +232,44 @@ export const checkProjectUser = async (req, res) => {
   }
 };
 
-// GET /api/projects/team-members  — all unique members across admin's projects
+// GET /api/projects/member-teams — project-wise co-members for member view
+export const getMemberTeams = async (req, res) => {
+  try {
+    const decoded = decodeToken(req);
+
+    const projects = await Project.find({ members: decoded.userId })
+      .select("_id title color status priority adminId members")
+      .populate("members", "fullName email avatar")
+      .populate("adminId", "fullName email avatar")
+      .sort({ createdAt: -1 });
+
+    const result = projects.map((p) => ({
+      _id: p._id,
+      title: p.title,
+      color: p.color,
+      status: p.status,
+      priority: p.priority,
+      admin: p.adminId
+        ? {
+            _id: p.adminId._id,
+            fullName: p.adminId.fullName,
+            email: p.adminId.email,
+            avatar: p.adminId.avatar,
+          }
+        : null,
+      members: p.members.map((m) => ({
+        _id: m._id,
+        fullName: m.fullName,
+        email: m.email,
+        avatar: m.avatar,
+      })),
+    }));
+
+    res.json({ projects: result });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 export const getProjectTeamMembers = async (req, res) => {
   try {
     const decoded = decodeToken(req);

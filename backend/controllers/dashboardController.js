@@ -17,9 +17,7 @@ export const getDashboardStats = async (req, res) => {
 
     // Scope projects by view mode
     const projectFilter =
-      viewMode === "member"
-        ? { members: userId }
-        : { adminId: userId };
+      viewMode === "member" ? { members: userId } : { adminId: userId };
 
     const projects = await Project.find(projectFilter)
       .sort({ createdAt: -1 })

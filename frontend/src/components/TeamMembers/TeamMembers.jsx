@@ -8,7 +8,182 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 const CHIPS_VISIBLE = 3;
 
-const TeamMembers = ({ searchQuery = "" }) => {
+/* ── Member-view: project team card ── */
+const MemberRow = ({ member }) => {
+  const av = getAvatarById(member.avatar);
+  return (
+    <div className="mt-member-row">
+      <div className="mt-member-avatar" style={{ background: av.bg }}>
+        {av.icon}
+      </div>
+      <div className="mt-member-info">
+        <span className="mt-member-name">{member.fullName}</span>
+        <span className="mt-member-email">{member.email}</span>
+      </div>
+    </div>
+  );
+};
+
+const MEMBERS_VISIBLE = 4;
+
+const ProjectTeamCard = ({ project, currentUserId }) => {
+  const [expanded, setExpanded] = useState(false);
+  const stripeColor = STRIPE_COLORS[project.color] || STRIPE_COLORS[1];
+  const coMembers = project.members.filter(
+    (m) => m._id?.toString() !== currentUserId?.toString(),
+  );
+  const hidden = coMembers.length - MEMBERS_VISIBLE;
+  const visibleMembers = expanded
+    ? coMembers
+    : coMembers.slice(0, MEMBERS_VISIBLE);
+
+  return (
+    <div className="mt-card">
+      <div className="mt-card-stripe" style={{ background: stripeColor }} />
+      <div className="mt-card-body">
+        {/* Header */}
+        <div className="mt-card-header">
+          <div className="mt-card-title-row">
+            <span className="mt-card-dot" style={{ background: stripeColor }} />
+            <span className="mt-card-title">{project.title}</span>
+          </div>
+          <span className={`mt-card-status mt-status-${project.status}`}>
+            {PROJECT_STATUS_LABEL[project.status] || project.status}
+          </span>
+        </div>
+
+        {/* Admin */}
+        {project.admin && (
+          <div className="mt-section">
+            <span className="mt-section-label mt-label-admin">Admin</span>
+            <MemberRow member={project.admin} />
+          </div>
+        )}
+
+        {/* Divider */}
+        <div className="mt-divider" />
+
+        {/* Co-members */}
+        <div className="mt-section">
+          <span className="mt-section-label">
+            Members
+            <span className="mt-member-count">{project.members.length}</span>
+          </span>
+          {coMembers.length === 0 ? (
+            <p className="mt-no-members">No other members in this project.</p>
+          ) : (
+            <>
+              <div
+                className={`mt-members-list${expanded ? " mt-members-list--expanded" : ""}`}
+              >
+                {visibleMembers.map((m) => (
+                  <MemberRow key={m._id} member={m} />
+                ))}
+              </div>
+              {hidden > 0 && !expanded && (
+                <button
+                  className="mt-toggle-btn"
+                  onClick={() => setExpanded(true)}
+                >
+                  +{hidden} more member{hidden !== 1 ? "s" : ""}
+                </button>
+              )}
+              {expanded && coMembers.length > MEMBERS_VISIBLE && (
+                <button
+                  className="mt-toggle-btn mt-toggle-btn--less"
+                  onClick={() => setExpanded(false)}
+                >
+                  Show less
+                </button>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ── Member view wrapper ── */
+const MemberTeamsView = ({ searchQuery, user }) => {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const currentUserId = (user?._id ?? user?.id)?.toString();
+
+  const fetchTeams = useCallback(async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch(`${API_URL}/api/projects/member-teams`, {
+        headers: { Authorization: `Bearer ${getAuthToken()}` },
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to load");
+      setProjects(data.projects);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchTeams();
+  }, [fetchTeams]);
+
+  const filtered = projects.filter((p) =>
+    p.title.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
+  return (
+    <div className="tm-page">
+      <div className="tm-toolbar">
+        <div className="tm-toolbar-left">
+          <span className="tm-count">{filtered.length}</span>
+          <span className="tm-count-label">
+            project team{filtered.length !== 1 ? "s" : ""} you're part of
+          </span>
+        </div>
+      </div>
+
+      <div className="tm-list-wrapper">
+        {loading ? (
+          <p className="tm-state-msg">Loading…</p>
+        ) : error ? (
+          <p className="tm-state-msg tm-state-error">{error}</p>
+        ) : filtered.length === 0 ? (
+          <div className="tm-empty">
+            <span className="tm-empty-icon">
+              {projects.length === 0 ? "👥" : "🔍"}
+            </span>
+            <p>
+              {projects.length === 0
+                ? "You haven't been added to any project yet."
+                : `No projects match "${searchQuery}"`}
+            </p>
+          </div>
+        ) : (
+          <div className="mt-grid">
+            {filtered.map((p) => (
+              <ProjectTeamCard
+                key={p._id}
+                project={p}
+                currentUserId={currentUserId}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const TeamMembers = ({ searchQuery = "", role = "admin", user }) => {
+  if (role === "member") {
+    return <MemberTeamsView searchQuery={searchQuery} user={user} />;
+  }
+
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
