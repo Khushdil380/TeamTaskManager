@@ -16,6 +16,7 @@ const createTransporter = () => {
     greetingTimeout: 10000,
     socketTimeout: 10000,
     tls: { rejectUnauthorized: false },
+    family: 4, // Force IPv4 — Railway does not support outbound IPv6
   });
 };
 
