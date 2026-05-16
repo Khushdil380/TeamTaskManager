@@ -26,7 +26,8 @@ export const signup = async (req, res) => {
       if (existingUser.isVerified) {
         // Fully verified account — block registration
         return res.status(409).json({
-          message: "Email already registered. Please login or use another email.",
+          message:
+            "Email already registered. Please login or use another email.",
         });
       }
       // Unverified ghost record (OTP never completed) — wipe it so they can retry
@@ -50,8 +51,10 @@ export const signup = async (req, res) => {
 
     await user.save();
 
-    // Send OTP email
-    await sendOtpEmail(email, otp);
+    // Send OTP email in background — don't block response on SMTP
+    sendOtpEmail(email, otp).catch((err) =>
+      console.error("OTP email failed:", err.message)
+    );
 
     return res.status(201).json({
       message: "Signup successful! OTP sent to your email.",
@@ -219,8 +222,10 @@ export const forgotPassword = async (req, res) => {
 
     await user.save();
 
-    // Send OTP email
-    await sendPasswordResetEmail(email, otp);
+    // Send reset email in background — don't block response on SMTP
+    sendPasswordResetEmail(email, otp).catch((err) =>
+      console.error("Password reset email failed:", err.message)
+    );
 
     return res.status(200).json({
       message: "Password reset OTP sent to your email",
@@ -311,7 +316,10 @@ export const resendOtp = async (req, res) => {
     user.otpExpiry = otpExpiry;
     await user.save();
 
-    await sendOtpEmail(email, otp);
+    // Send OTP email in background — don't block response on SMTP
+    sendOtpEmail(email, otp).catch((err) =>
+      console.error("Resend OTP email failed:", err.message)
+    );
 
     return res.status(200).json({ message: "OTP resent successfully" });
   } catch (error) {
