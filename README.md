@@ -13,7 +13,7 @@
 [![JWT](https://img.shields.io/badge/Auth-JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
 [![License](https://img.shields.io/badge/License-MIT-FF6A33?style=for-the-badge)](LICENSE)
 
-[🚀 Live Demo](https://teamtaskmanager-production-5902.up.railway.app) &nbsp;·&nbsp;
+[🚀 Live Demo](https://teamtaskmanagerapp.up.railway.app/) &nbsp;·&nbsp;
 [🐛 Report Bug](https://github.com/Khushdil380/TeamTaskManager/issues) &nbsp;·&nbsp;
 [💡 Request Feature](https://github.com/Khushdil380/TeamTaskManager/issues)
 
