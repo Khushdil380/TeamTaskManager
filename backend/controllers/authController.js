@@ -23,9 +23,14 @@ export const signup = async (req, res) => {
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(409).json({
-        message: "Email already registered. Please login or use another email.",
-      });
+      if (existingUser.isVerified) {
+        // Fully verified account — block registration
+        return res.status(409).json({
+          message: "Email already registered. Please login or use another email.",
+        });
+      }
+      // Unverified ghost record (OTP never completed) — wipe it so they can retry
+      await existingUser.deleteOne();
     }
 
     // Generate OTP
