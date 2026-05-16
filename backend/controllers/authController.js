@@ -3,6 +3,7 @@ import {
   generateOtp,
   sendOtpEmail,
   sendPasswordResetEmail,
+  sendWelcomeEmail,
 } from "../services/emailService.js";
 import jwt from "jsonwebtoken";
 
@@ -53,7 +54,7 @@ export const signup = async (req, res) => {
 
     // Send OTP email in background — don't block response on SMTP
     sendOtpEmail(email, otp).catch((err) =>
-      console.error("[Signup] OTP email failed:", err.code, err.responseCode, err.message)
+      console.error("[Signup] OTP email failed:", err.message)
     );
 
     return res.status(201).json({
@@ -105,6 +106,9 @@ export const verifyOtp = async (req, res) => {
     user.lastLogin = new Date();
 
     await user.save();
+
+    // Send welcome email in background (non-critical)
+    sendWelcomeEmail(user.email, user.fullName);
 
     // Generate JWT token
     const token = jwt.sign(
@@ -224,7 +228,7 @@ export const forgotPassword = async (req, res) => {
 
     // Send reset email in background — don't block response on SMTP
     sendPasswordResetEmail(email, otp).catch((err) =>
-      console.error("[ForgotPassword] Reset email failed:", err.code, err.responseCode, err.message)
+      console.error("[ForgotPassword] Reset email failed:", err.message)
     );
 
     return res.status(200).json({
@@ -318,7 +322,7 @@ export const resendOtp = async (req, res) => {
 
     // Send OTP email in background — don't block response on SMTP
     sendOtpEmail(email, otp).catch((err) =>
-      console.error("[ResendOTP] OTP email failed:", err.code, err.responseCode, err.message)
+      console.error("[ResendOTP] OTP email failed:", err.message)
     );
 
     return res.status(200).json({ message: "OTP resent successfully" });
