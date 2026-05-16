@@ -1,27 +1,34 @@
-// Email service using Resend HTTP API (no SMTP — works on Railway)
-// Requires RESEND_API_KEY env var. Get a free key at https://resend.com
+// Email service using Brevo REST API (bypasses Railway SMTP block)
+// Requires BREVO_API_KEY env var. Free tier: 300 emails/day, no domain needed.
+// Setup: brevo.com -> Senders & IPs -> Add & verify helpteamtaskmanager@gmail.com
+//         Then: Developers -> API Keys -> create key -> add as BREVO_API_KEY in Railway
 
-const RESEND_API = "https://api.resend.com/emails";
+const BREVO_API = "https://api.brevo.com/v3/smtp/email";
+const SENDER_EMAIL = process.env.EMAIL_USER || "helpteamtaskmanager@gmail.com";
+const SENDER_NAME = "Team Task Manager";
 
 const sendEmail = async ({ to, subject, html }) => {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) throw new Error("RESEND_API_KEY env var is not set");
+  const apiKey = process.env.BREVO_API_KEY;
+  if (!apiKey) throw new Error("BREVO_API_KEY env var is not set");
 
-  const from =
-    process.env.EMAIL_FROM || "Team Task Manager <onboarding@resend.dev>";
-
-  const res = await fetch(RESEND_API, {
+  const res = await fetch(BREVO_API, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
+      accept: "application/json",
+      "api-key": apiKey,
+      "content-type": "application/json",
     },
-    body: JSON.stringify({ from, to, subject, html }),
+    body: JSON.stringify({
+      sender: { name: SENDER_NAME, email: SENDER_EMAIL },
+      to: [{ email: to }],
+      subject,
+      htmlContent: html,
+    }),
   });
 
   const data = await res.json();
   if (!res.ok) {
-    throw new Error(`Resend API error ${res.status}: ${JSON.stringify(data)}`);
+    throw new Error(`Brevo API error ${res.status}: ${JSON.stringify(data)}`);
   }
   return data;
 };
@@ -53,10 +60,10 @@ export const sendOtpEmail = async (email, otp) => {
         </div>
       `,
     });
-    console.log(`OTP email sent successfully to ${email}`);
+    console.log(`[Brevo] OTP email sent to ${email}`);
     return true;
   } catch (error) {
-    console.error("OTP email error:", error.message);
+    console.error("[Brevo] OTP email error:", error.message);
     throw error;
   }
 };
@@ -81,10 +88,10 @@ export const sendPasswordResetEmail = async (email, otp) => {
         </div>
       `,
     });
-    console.log(`Password reset email sent successfully to ${email}`);
+    console.log(`[Brevo] Password reset email sent to ${email}`);
     return true;
   } catch (error) {
-    console.error("Password reset email error:", error.message);
+    console.error("[Brevo] Password reset email error:", error.message);
     throw error;
   }
 };
