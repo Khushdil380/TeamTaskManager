@@ -54,7 +54,7 @@ export const signup = async (req, res) => {
 
     // Send OTP email in background — don't block response on SMTP
     sendOtpEmail(email, otp).catch((err) =>
-      console.error("[Signup] OTP email failed:", err.message)
+      console.error("[Signup] OTP email failed:", err.message),
     );
 
     return res.status(201).json({
@@ -228,7 +228,7 @@ export const forgotPassword = async (req, res) => {
 
     // Send reset email in background — don't block response on SMTP
     sendPasswordResetEmail(email, otp).catch((err) =>
-      console.error("[ForgotPassword] Reset email failed:", err.message)
+      console.error("[ForgotPassword] Reset email failed:", err.message),
     );
 
     return res.status(200).json({
@@ -322,7 +322,7 @@ export const resendOtp = async (req, res) => {
 
     // Send OTP email in background — don't block response on SMTP
     sendOtpEmail(email, otp).catch((err) =>
-      console.error("[ResendOTP] OTP email failed:", err.message)
+      console.error("[ResendOTP] OTP email failed:", err.message),
     );
 
     return res.status(200).json({ message: "OTP resent successfully" });

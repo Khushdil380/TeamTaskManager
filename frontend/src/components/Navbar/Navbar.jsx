@@ -63,7 +63,8 @@ const Navbar = () => {
               <div className="help-popover-arrow" />
               <p className="help-popover-title">Need help?</p>
               <p className="help-popover-body">
-                Send us an email and we&apos;ll get back to you as soon as possible.
+                Send us an email and we&apos;ll get back to you as soon as
+                possible.
               </p>
               <a
                 href="mailto:helpteamtaskmanager@gmail.com"
