@@ -1,27 +1,22 @@
 import nodemailer from "nodemailer";
 
-let transporter = null;
+// Create a fresh transporter each call — avoids stale cached connections on Railway
+const createTransporter = () => {
+  const user = process.env.EMAIL_USER;
+  const pass = process.env.EMAIL_PASSWORD;
 
-// Initialize transporter lazily
-const getTransporter = () => {
-  if (!transporter) {
-    console.log("Initializing Email Transporter:");
-    console.log("EMAIL_SERVICE:", process.env.EMAIL_SERVICE);
-    console.log("EMAIL_USER:", process.env.EMAIL_USER);
-    console.log(
-      "EMAIL_PASSWORD:",
-      process.env.EMAIL_PASSWORD ? "***" : "NOT SET",
-    );
+  console.log("[Email] Transporter init — USER:", user || "NOT SET", "PASS:", pass ? "set" : "NOT SET");
 
-    transporter = nodemailer.createTransport({
-      service: process.env.EMAIL_SERVICE || "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-    });
-  }
-  return transporter;
+  return nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // STARTTLS on port 587
+    auth: { user, pass },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
+    tls: { rejectUnauthorized: false },
+  });
 };
 
 // Generate OTP
@@ -61,12 +56,12 @@ export const sendOtpEmail = async (email, otp) => {
       `,
     };
 
-    await getTransporter().sendMail(mailOptions);
+    await createTransporter().sendMail(mailOptions);
     console.log(`✅ OTP email sent successfully to ${email}`);
     return true;
   } catch (error) {
-    console.error("❌ Error sending OTP email:", error.message);
-    throw new Error("Failed to send OTP email");
+    console.error("❌ OTP email error:", error.code, error.responseCode, error.message);
+    throw error;
   }
 };
 
@@ -98,12 +93,11 @@ export const sendPasswordResetEmail = async (email, otp) => {
       `,
     };
 
-    await getTransporter().sendMail(mailOptions);
+    await createTransporter().sendMail(mailOptions);
     console.log(`✅ Password reset email sent successfully to ${email}`);
     return true;
   } catch (error) {
-    console.error("❌ Error sending password reset email:", error.message);
-    throw new Error("Failed to send password reset email");
-    throw new Error("Failed to send password reset email");
+    console.error("❌ Password reset email error:", error.code, error.responseCode, error.message);
+    throw error;
   }
 };
