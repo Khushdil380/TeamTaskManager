@@ -25,17 +25,17 @@
 
 > _Screenshots below — replace with actual images._
 
-|                Home Page                |                     Admin Dashboard                      |
-| :-------------------------------------: | :------------------------------------------------------: |
-| ![Home Page](docs/screenshots/home.png) | ![Admin Dashboard](docs/screenshots/admin-dashboard.png) |
+**Home Page**
 
-|                Project View                |           Task Management            |
-| :----------------------------------------: | :----------------------------------: |
-| ![Projects](docs/screenshots/projects.png) | ![Tasks](docs/screenshots/tasks.png) |
+![Home Page](docs/screenshots/home.png)
 
-|               Calendar View                |                 Member Dashboard                 |
-| :----------------------------------------: | :----------------------------------------------: |
-| ![Calendar](docs/screenshots/calendar.png) | ![Member](docs/screenshots/member-dashboard.png) |
+| Admin Dashboard | Member Dashboard |
+| :-------------: | :--------------: |
+| ![Admin Dashboard](docs/screenshots/admin-dashboard.png) | ![Member Dashboard](docs/screenshots/member-dashboard.png) |
+
+| Calendar View | Project View |
+| :-----------: | :----------: |
+| ![Calendar](docs/screenshots/calendar.png) | ![Projects](docs/screenshots/projects.png) |
 
 ---
 
