@@ -23,25 +23,21 @@
 
 ## 📸 Screenshots
 
-> _Screenshots below — replace with actual images._
-
 **Home Page**
 
 ![Home Page](docs/screenshots/home.png)
 
-| Admin Dashboard | Member Dashboard |
-| :-------------: | :--------------: |
+|                     Admin Dashboard                      |                      Member Dashboard                      |
+| :------------------------------------------------------: | :--------------------------------------------------------: |
 | ![Admin Dashboard](docs/screenshots/admin-dashboard.png) | ![Member Dashboard](docs/screenshots/member-dashboard.png) |
 
-| Calendar View | Project View |
-| :-----------: | :----------: |
+|               Calendar View                |                Project View                |
+| :----------------------------------------: | :----------------------------------------: |
 | ![Calendar](docs/screenshots/calendar.png) | ![Projects](docs/screenshots/projects.png) |
 
 ---
 
 ## 🎬 Demo Video
-
-> _Replace the link below with your actual demo video._
 
 [![Watch Demo](https://img.shields.io/badge/▶%20Watch%20Demo-FF6A33?style=for-the-badge)](docs/demo.mp4)
 
@@ -364,4 +360,3 @@ Made with ❤️ and ☕ by [Khushdil Ansari](https://khushdil-ansari-portfolio-
 ⭐ **Star this repo if you found it useful!**
 
 </div>
-
